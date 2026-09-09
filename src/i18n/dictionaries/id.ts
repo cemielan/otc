@@ -75,7 +75,7 @@ export const id: Dictionary = {
         levels: ["SD", "SMP", "SMA"],
       },
       tka: {
-        name: "Persiapan TKA",
+        name: "Persiapan Tes Kemampuan Academik (TKA)",
         tagline: "Latihan terarah dan berbatas waktu menjelang TKA.",
         levels: ["Persiapan intensif"],
       },
