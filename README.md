@@ -4,21 +4,25 @@ Marketing landing page for **Omicron Tuition Centre (OTC)**, a Cambridge, Nation
 National+ tuition centre in West Jakarta teaching Mathematics, Physics, Chemistry and
 English.
 
-Fully static (no server runtime, no database), trilingual, light/dark themed, and ready to
-deploy on Vercel.
+Fully static (no server runtime, no database), trilingual, light/dark themed, mobile-first,
+and ready to deploy on Vercel.
 
 ## Stack
 
-| Concern    | Choice                                                           |
-| ---------- | ---------------------------------------------------------------- |
-| Framework  | Next.js 15.5 (App Router) — the 15.x long-term backport line     |
-| Language   | TypeScript (strict)                                              |
-| Styling    | Tailwind CSS 3.4 with CSS-variable design tokens                 |
-| Animation  | Framer Motion 12                                                 |
-| Theming    | `next-themes` (system / light / dark, persisted)                 |
-| i18n       | Hand-rolled client-side dictionaries (English, Indonesian, 简体中文) |
-| Icons      | `lucide-react`, plus one hand-drawn Instagram glyph              |
-| UI effects | Aceternity-style components, re-implemented locally (see below)   |
+| Concern    | Choice                                                                 |
+| ---------- | ---------------------------------------------------------------------- |
+| Framework  | Next.js 15.5 (App Router) — the 15.x long-term backport line           |
+| Language   | TypeScript (strict)                                                    |
+| Components | HeroUI v3 (`@heroui/react`, `@heroui/styles`) on React Aria            |
+| Styling    | Tailwind CSS v4, CSS-first config, HeroUI theme tokens                 |
+| Animation  | Framer Motion 12                                                       |
+| Theming    | `next-themes` (system / light / dark, persisted)                       |
+| i18n       | Client-side dictionaries (English, Indonesian, 简体中文)                  |
+| Icons      | `lucide-react`, plus one hand-drawn Instagram glyph                    |
+
+HeroUI v3 requires Tailwind CSS v4, so there is **no `tailwind.config.ts`** — the theme
+lives in [`src/app/globals.css`](src/app/globals.css) via `@theme`, and PostCSS uses
+`@tailwindcss/postcss`.
 
 ## Getting started
 
@@ -45,15 +49,17 @@ src/
 ├── app/
 │   ├── layout.tsx          # fonts, metadata, JSON-LD, theme + i18n providers
 │   ├── page.tsx            # section composition only
-│   ├── globals.css         # design tokens (light/dark), base + component layers
+│   ├── globals.css         # HeroUI import, Tailwind theme, OTC palette
 │   ├── icon.svg            # favicon
 │   ├── robots.ts           # generated /robots.txt
 │   └── sitemap.ts          # generated /sitemap.xml
 ├── components/
-│   ├── layout/             # navbar, footer, brand, theme toggle, language switcher, WhatsApp FAB
-│   ├── primitives/         # Section, SectionHeading, Reveal, ButtonLink
+│   ├── layout/             # navbar (+ mobile drawer), footer, brand, theme toggle,
+│   │                       # language switcher, WhatsApp FAB
+│   ├── primitives/         # Section, SectionHeading, Reveal, CtaLink
 │   ├── sections/           # one file per landing-page block
-│   └── ui/                 # Aceternity-style effects + brand glyph
+│   ├── effects/            # local Framer Motion decoration (see below)
+│   └── icons.tsx           # Instagram glyph
 ├── content/site.ts         # all locale-independent facts (contacts, pricing, map, nav)
 ├── i18n/
 │   ├── config.ts           # locale list, metadata, browser matching
@@ -77,33 +83,85 @@ can be reordered or removed without touching anything else.
 To edit a price, a class size or a phone number, change `content/site.ts` only. To edit
 wording, change all three dictionaries.
 
-### Aceternity UI components
-
-The effects are re-implemented in [`src/components/ui`](src/components/ui) rather than
-pulled from the Aceternity registry, because that registry targets Tailwind v4 while this
-project runs the more stable Tailwind v3 line. The patterns used are Spotlight,
-Moving Border, Card Hover Effect, Infinite Moving Cards, Meteors and Text Generate Effect.
-Their keyframes live in [`tailwind.config.ts`](tailwind.config.ts).
-
-Two deliberate differences from the originals:
-
-- `InfiniteMovingCards` duplicates its children in React instead of cloning DOM nodes in an
-  effect, so the marquee renders correctly on the server.
-- `Meteors` derives positions and delays from the item index instead of `Math.random()`, so
-  server and client markup match and hydration stays clean.
+## Working with HeroUI v3
 
 ### Theming
 
-Every colour is a CSS variable holding an RGB channel triplet
-(`--accent: 237 133 100`), consumed by Tailwind as
-`rgb(var(--accent) / <alpha-value>)`. One set of variables in `:root` and `.dark`
-(see [`globals.css`](src/app/globals.css)) drives the whole palette, and opacity modifiers
-like `bg-accent/10` keep working. `next-themes` sets the `class` on `<html>` before paint,
-so there is no flash of the wrong theme.
+HeroUI is driven entirely by CSS variables, so the OTC palette is applied by **overriding
+its semantic tokens** rather than restyling components. `globals.css` sets `--background`,
+`--foreground`, `--surface`, `--muted`, `--border`, `--accent`, the `--field-*` group and
+friends in `:root`, and restates them in `.dark`. Every HeroUI component — buttons, cards,
+chips, the select popover, the drawer — picks the brand colours up from there.
 
-### Contact form
+Two details worth knowing before editing the palette:
 
-The form in the Contact section has **no backend**. It composes a WhatsApp message from the
+- HeroUI declares its own theme inside `@layer base`. Unlayered declarations beat layered
+  ones regardless of order, so **every token set in `:root` must also be restated in
+  `.dark`**, or the light value will leak into dark mode.
+- Tokens HeroUI does not have (`--panel`, `--panel-muted`, `--panel-foreground`, the logo
+  yellow/red) are declared as plain variables and exposed to Tailwind through
+  `@theme inline`, which keeps the `var()` reference alive so the `.dark` overrides apply.
+  `accent-soft` is deliberately *not* redefined — HeroUI already derives it from `--accent`
+  per theme.
+
+`globals.css` also redefines the `dark` variant as class-only
+(`@custom-variant dark (&:where(.dark, .dark *))`). HeroUI's own definition also falls back
+to `prefers-color-scheme`, which would apply dark-only utilities on an OS-dark device even
+when the visitor has explicitly chosen light.
+
+### Two API details that are easy to get wrong
+
+- **`Drawer.Trigger` and `Dropdown.Trigger` wrap React Aria's Button, not HeroUI's**, so
+  they reject `variant` / `isIconOnly`. Style them with the exported `buttonVariants()`
+  instead. The same helper is how [`CtaLink`](src/components/primitives/cta-link.tsx) gives
+  button styling to a real `<a>` — HeroUI's `Button` always renders a `<button>`, and its
+  `Link` carries a `.link` base class that fights the `.button` classes.
+- **`Card`, `Chip` and friends are polymorphic through a `render` *function***, not an `as`
+  prop: `render={(props) => <article {...props} />}`, forwarding props and ref.
+
+### Bundle size
+
+The page ships ~272 kB of first-load JS and ~43 kB of gzipped CSS. Two things were measured
+and deliberately left alone:
+
+- Per-component imports (`@heroui/react/card`) produce a **byte-identical** bundle to the
+  barrel import, so the barrel is used for readability.
+- The CSS is HeroUI's full precompiled stylesheet. `@heroui/styles` does expose
+  per-component CSS, but composing it by hand means maintaining two order-sensitive import
+  lists that must track HeroUI's documented ordering rules on every upgrade — not worth
+  ~25 kB gzipped on a single-page site.
+
+### Local effects
+
+[`src/components/effects/`](src/components/effects/) holds four small Framer Motion
+decorations HeroUI has no equivalent for: the hero spotlight, the marquee strip, the
+featured-card meteors and the word-by-word heading reveal. All are decoration only — the
+copy is in the server-rendered HTML regardless. `Meteors` derives positions from the item
+index instead of `Math.random()`, and `Marquee` duplicates its children in React rather
+than cloning DOM nodes, so both hydrate cleanly.
+
+## Mobile
+
+The layout is mobile-first: single-column sections, `py-14` rising to `py-28`, type scales
+that start at `text-[2rem]` for the hero, full-width call-to-action buttons on phones, and
+tap targets of at least 44px throughout.
+
+Specifics worth keeping in mind when editing:
+
+- The mobile navigation is a **HeroUI Drawer** (bottom sheet), so the focus trap, scroll
+  lock, Escape handling and swipe-to-dismiss come from React Aria.
+- The header row is tuned to fit a 320px viewport: below `22rem` the brand subtitle and the
+  language code collapse, leaving the mark, the globe icon, the theme toggle and the menu
+  button.
+- `html` has `overflow-x: hidden` so the decorative blurs and the hero's floating formula
+  chips can never produce a horizontal scrollbar.
+- The WhatsApp floating button respects `env(safe-area-inset-bottom)` on notched phones.
+- The footer is two columns on phones and four from `lg` up.
+
+## Contact form
+
+The form in the Contact section has **no backend**. It is a HeroUI/React Aria `Form` with
+`TextField`, `Select` and `TextArea`, and on submit it composes a WhatsApp message from the
 fields and opens `wa.me` in a new tab. Nothing is stored or transmitted to any server,
 which also means the site holds no personal data.
 
@@ -150,6 +208,7 @@ Notes:
 ## Licence and third-party review
 
 Third-party packages in use: `next`, `react`, `framer-motion` (MIT), `tailwindcss` (MIT),
-`next-themes` (MIT), `lucide-react` (ISC), `clsx` / `tailwind-merge` (MIT). The Aceternity
-UI patterns were re-implemented locally rather than vendored. Before production use, run
-these through the standard IT Division licence check and technology review.
+`@heroui/react` / `@heroui/styles` (MIT, pulling `react-aria-components` — Apache-2.0 —
+and `tailwind-variants` / `tw-animate-css`), `next-themes` (MIT), `lucide-react` (ISC),
+`clsx` / `tailwind-merge` (MIT). Before production use, run these through the standard IT
+Division licence check and technology review.

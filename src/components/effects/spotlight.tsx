@@ -3,8 +3,8 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Aceternity-style spotlight: a heavily blurred, skewed ellipse that fades in
- * behind the hero copy. Purely decorative, so it is hidden from assistive tech.
+ * A heavily blurred, skewed ellipse that fades in behind the hero copy.
+ * Purely decorative, so it is hidden from assistive technology.
  */
 export function Spotlight({
   className,

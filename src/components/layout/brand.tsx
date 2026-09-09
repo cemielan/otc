@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { siteConfig } from "@/content/site";
+import { cn } from "@/lib/utils";
 
 /** The Omicron mark: an open ring with the orbiting dot from the centre's logo. */
 export function BrandMark({ className }: { className?: string }) {
@@ -7,7 +7,7 @@ export function BrandMark({ className }: { className?: string }) {
     <span
       aria-hidden="true"
       className={cn(
-        "relative grid size-9 shrink-0 place-items-center rounded-xl bg-panel",
+        "bg-panel relative grid size-9 shrink-0 place-items-center rounded-xl",
         className,
       )}
     >
@@ -16,10 +16,10 @@ export function BrandMark({ className }: { className?: string }) {
           cx="10.5"
           cy="12"
           r="6.25"
-          stroke="rgb(var(--brand-yellow))"
+          stroke="var(--color-brand-yellow)"
           strokeWidth="2.25"
         />
-        <circle cx="20" cy="7.5" r="2" fill="rgb(var(--accent))" />
+        <circle cx="20" cy="7.5" r="2" fill="var(--color-accent)" />
       </svg>
     </span>
   );
@@ -46,10 +46,8 @@ export function Brand({
         </span>
         <span
           className={cn(
-            "text-[0.65rem] font-medium uppercase tracking-[0.18em]",
-            tone === "panel"
-              ? "text-panel-foreground/60"
-              : "text-foreground-muted",
+            "hidden text-[0.65rem] font-medium tracking-[0.18em] uppercase min-[22rem]:block",
+            tone === "panel" ? "text-panel-foreground/60" : "text-muted",
           )}
         >
           Tuition Centre

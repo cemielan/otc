@@ -8,15 +8,20 @@ import { I18nProvider } from "@/i18n/provider";
 
 import "./globals.css";
 
+/*
+ * The CSS variable names are deliberately font-specific: `--font-sans` and
+ * `--font-display` are Tailwind theme tokens (see globals.css) that reference
+ * these, so reusing those names here would be self-referential.
+ */
 const display = Outfit({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-outfit",
   display: "swap",
 });
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 

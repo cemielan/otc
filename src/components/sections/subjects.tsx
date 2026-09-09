@@ -1,11 +1,12 @@
 "use client";
 
+import { Card, Chip } from "@heroui/react";
+import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { Atom, FlaskConical, Languages, Sigma } from "lucide-react";
 
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
-import { HoverEffect } from "@/components/ui/hover-effect";
 import { subjects, type SubjectId } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
 
@@ -27,42 +28,55 @@ export function Subjects() {
         description={t.subjects.description}
       />
 
-      <HoverEffect
-        items={subjects}
-        keyFor={(subject) => subject.id}
-        className="mt-8 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        {(subject) => {
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {subjects.map((subject, index) => {
           const copy = t.subjects.items[subject.id];
           const Icon = subjectIcons[subject.id];
 
           return (
-            <>
-              <span className="grid size-12 place-items-center rounded-2xl bg-panel text-accent">
-                <Icon className="size-[1.35rem]" strokeWidth={2} />
-              </span>
+            <motion.li
+              key={subject.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              /*
+                `whileHover` only fires for pointer devices, so touch users are
+                not left with a stuck hover state after tapping a card.
+              */
+              whileHover={{ y: -6 }}
+              className="h-full"
+            >
+              <Card className="hover:border-accent/50 hover:shadow-card flex h-full flex-col rounded-3xl p-6 transition-colors duration-300">
+                <span className="bg-panel text-accent grid size-12 place-items-center rounded-2xl">
+                  <Icon className="size-[1.35rem]" strokeWidth={2} />
+                </span>
 
-              <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-foreground">
-                {copy.name}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
-                {copy.description}
-              </p>
+                <Card.Title className="font-display text-foreground mt-5 text-xl font-semibold tracking-tight">
+                  {copy.name}
+                </Card.Title>
+                <Card.Description className="text-muted mt-2 text-sm leading-relaxed">
+                  {copy.description}
+                </Card.Description>
 
-              <ul className="mt-5 flex flex-wrap gap-1.5">
-                {copy.topics.map((topic) => (
-                  <li
-                    key={topic}
-                    className="rounded-full border border-line bg-surface-muted px-2.5 py-1 text-[0.7rem] font-medium text-foreground-muted"
-                  >
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </>
+                <ul className="mt-5 flex flex-wrap gap-1.5">
+                  {copy.topics.map((topic) => (
+                    <li key={topic}>
+                      <Chip variant="secondary" size="sm">
+                        <Chip.Label>{topic}</Chip.Label>
+                      </Chip>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </motion.li>
           );
-        }}
-      </HoverEffect>
+        })}
+      </ul>
     </Section>
   );
 }

@@ -1,24 +1,33 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
+import {
+  Button,
+  Card,
+  FieldError,
+  Form,
+  Input,
+  Label,
+  ListBox,
+  ListBoxItem,
+  Select,
+  TextArea,
+  TextField,
+} from "@heroui/react";
 import { MessageCircle, Phone, Send } from "lucide-react";
 
-import { buttonClasses } from "@/components/primitives/button-link";
+import { InstagramGlyph } from "@/components/icons";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
-import { InstagramGlyph } from "@/components/ui/brand-icons";
 import { packages, siteConfig, subjects } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
 import { whatsappUrl } from "@/lib/utils";
 
 const { contact } = siteConfig;
 
-const fieldClasses =
-  "w-full rounded-2xl border border-line bg-background px-4 py-3 text-sm text-foreground placeholder:text-foreground-muted/70 transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30";
-
 const labelClasses =
-  "text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground-muted";
+  "text-muted text-[0.7rem] font-semibold tracking-[0.12em] uppercase";
 
 interface FormState {
   name: string;
@@ -68,9 +77,7 @@ export function Contact() {
       form.grade.trim() ? `${template.grade}: ${form.grade.trim()}` : null,
       form.subject ? `${template.subject}: ${form.subject}` : null,
       form.plan ? `${template.plan}: ${form.plan}` : null,
-      form.message.trim()
-        ? `${template.message}: ${form.message.trim()}`
-        : null,
+      form.message.trim() ? `${template.message}: ${form.message.trim()}` : null,
     ].filter((line): line is string => line !== null);
 
     window.open(
@@ -79,6 +86,16 @@ export function Contact() {
       "noopener,noreferrer",
     );
   }
+
+  const subjectOptions = [
+    ...subjects.map((subject) => t.subjects.items[subject.id].name),
+    t.contact.form.subjectAll,
+  ];
+
+  const planOptions = [
+    ...packages.map((plan) => t.packages.plans[plan.id].name),
+    t.contact.form.planUndecided,
+  ];
 
   return (
     <Section id="contact">
@@ -93,7 +110,9 @@ export function Contact() {
           <Reveal delay={0.1}>
             <ul className="grid gap-3">
               <ChannelCard
-                icon={<MessageCircle className="size-[1.1rem]" strokeWidth={2.2} />}
+                icon={
+                  <MessageCircle className="size-[1.1rem]" strokeWidth={2.2} />
+                }
                 label={t.contact.channels.whatsappLabel}
                 value={contact.whatsappDisplay}
                 caption={t.contact.channels.whatsappValue}
@@ -120,126 +139,146 @@ export function Contact() {
         </div>
 
         <Reveal delay={0.15}>
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="rounded-4xl border border-line bg-surface p-6 shadow-card sm:p-8"
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              <label className="flex flex-col gap-2 sm:col-span-1">
-                <span className={labelClasses}>{t.contact.form.nameLabel}</span>
-                <input
-                  type="text"
-                  name="name"
+          <Card className="shadow-card rounded-4xl p-5 sm:p-8">
+            {/*
+              HeroUI's Form is React Aria's, so validation state, labelling and
+              the association between label, field and error message are handled
+              by the library rather than by hand-written aria-* attributes.
+            */}
+            <Form onSubmit={handleSubmit} validationBehavior="aria">
+              <div className="grid w-full gap-5 sm:grid-cols-2">
+                <TextField
+                  className="flex flex-col gap-2"
                   value={form.name}
-                  onChange={(event) => update("name", event.target.value)}
-                  placeholder={t.contact.form.namePlaceholder}
-                  autoComplete="name"
-                  aria-invalid={Boolean(error)}
-                  className={fieldClasses}
-                />
-              </label>
+                  onChange={(value) => update("name", value)}
+                  isInvalid={Boolean(error)}
+                  isRequired
+                >
+                  <Label className={labelClasses}>
+                    {t.contact.form.nameLabel}
+                  </Label>
+                  <Input
+                    placeholder={t.contact.form.namePlaceholder}
+                    autoComplete="name"
+                  />
+                  <FieldError className="text-brand-red text-sm font-medium">
+                    {error}
+                  </FieldError>
+                </TextField>
 
-              <label className="flex flex-col gap-2 sm:col-span-1">
-                <span className={labelClasses}>{t.contact.form.gradeLabel}</span>
-                <input
-                  type="text"
-                  name="grade"
+                <TextField
+                  className="flex flex-col gap-2"
                   value={form.grade}
-                  onChange={(event) => update("grade", event.target.value)}
-                  placeholder={t.contact.form.gradePlaceholder}
-                  className={fieldClasses}
-                />
-              </label>
+                  onChange={(value) => update("grade", value)}
+                >
+                  <Label className={labelClasses}>
+                    {t.contact.form.gradeLabel}
+                  </Label>
+                  <Input placeholder={t.contact.form.gradePlaceholder} />
+                </TextField>
 
-              <label className="flex flex-col gap-2">
-                <span className={labelClasses}>
-                  {t.contact.form.subjectLabel}
-                </span>
-                <select
-                  name="subject"
+                <SelectField
+                  label={t.contact.form.subjectLabel}
+                  placeholder={t.contact.form.subjectPlaceholder}
+                  options={subjectOptions}
                   value={form.subject}
-                  onChange={(event) => update("subject", event.target.value)}
-                  className={fieldClasses}
-                >
-                  <option value="">{t.contact.form.subjectPlaceholder}</option>
-                  {subjects.map((subject) => (
-                    <option
-                      key={subject.id}
-                      value={t.subjects.items[subject.id].name}
-                    >
-                      {t.subjects.items[subject.id].name}
-                    </option>
-                  ))}
-                  <option value={t.contact.form.subjectAll}>
-                    {t.contact.form.subjectAll}
-                  </option>
-                </select>
-              </label>
-
-              <label className="flex flex-col gap-2">
-                <span className={labelClasses}>{t.contact.form.planLabel}</span>
-                <select
-                  name="plan"
-                  value={form.plan}
-                  onChange={(event) => update("plan", event.target.value)}
-                  className={fieldClasses}
-                >
-                  <option value="">{t.contact.form.planPlaceholder}</option>
-                  {packages.map((plan) => (
-                    <option
-                      key={plan.id}
-                      value={t.packages.plans[plan.id].name}
-                    >
-                      {t.packages.plans[plan.id].name}
-                    </option>
-                  ))}
-                  <option value={t.contact.form.planUndecided}>
-                    {t.contact.form.planUndecided}
-                  </option>
-                </select>
-              </label>
-
-              <label className="flex flex-col gap-2 sm:col-span-2">
-                <span className={labelClasses}>
-                  {t.contact.form.messageLabel}
-                </span>
-                <textarea
-                  name="message"
-                  rows={4}
-                  value={form.message}
-                  onChange={(event) => update("message", event.target.value)}
-                  placeholder={t.contact.form.messagePlaceholder}
-                  className={`${fieldClasses} resize-y`}
+                  onChange={(value) => update("subject", value)}
                 />
-              </label>
-            </div>
 
-            {error ? (
-              <p role="alert" className="mt-4 text-sm font-medium text-brand-red">
-                {error}
+                <SelectField
+                  label={t.contact.form.planLabel}
+                  placeholder={t.contact.form.planPlaceholder}
+                  options={planOptions}
+                  value={form.plan}
+                  onChange={(value) => update("plan", value)}
+                />
+
+                <TextField
+                  className="flex flex-col gap-2 sm:col-span-2"
+                  value={form.message}
+                  onChange={(value) => update("message", value)}
+                >
+                  <Label className={labelClasses}>
+                    {t.contact.form.messageLabel}
+                  </Label>
+                  <TextArea
+                    rows={4}
+                    placeholder={t.contact.form.messagePlaceholder}
+                    className="resize-y"
+                  />
+                </TextField>
+              </div>
+
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                fullWidth
+                className="mt-6 min-h-12"
+              >
+                <Send className="size-4" strokeWidth={2.2} />
+                {t.contact.form.submit}
+              </Button>
+
+              <p className="text-muted mt-4 text-center text-xs leading-relaxed">
+                {t.contact.form.privacy}
               </p>
-            ) : null}
-
-            <button
-              type="submit"
-              className={buttonClasses({
-                variant: "primary",
-                size: "lg",
-                className: "mt-6 w-full",
-              })}
-            >
-              <Send className="size-4" strokeWidth={2.2} />
-              {t.contact.form.submit}
-            </button>
-
-            <p className="mt-4 text-center text-xs leading-relaxed text-foreground-muted">
-              {t.contact.form.privacy}
-            </p>
-          </form>
+            </Form>
+          </Card>
         </Reveal>
       </div>
     </Section>
+  );
+}
+
+/**
+ * HeroUI's Select is a listbox popover rather than a native `<select>`, so the
+ * options are keyed by their own label — the value that ends up in the WhatsApp
+ * message is the translated option text.
+ */
+function SelectField({
+  label,
+  placeholder,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder: string;
+  options: readonly string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <Select
+      className="flex flex-col gap-2"
+      selectedKey={value || null}
+      onSelectionChange={(key) => onChange(key === null ? "" : String(key))}
+    >
+      <Label className={labelClasses}>{label}</Label>
+      {/* Select.Trigger renders HeroUI's own chevron indicator by default. */}
+      <Select.Trigger className="min-h-12 justify-between">
+        <Select.Value>
+          {/*
+            React Aria reports an empty string (not null) for `selectedText`
+            when nothing is chosen, so the placeholder is keyed off
+            `isPlaceholder` instead of a nullish check.
+          */}
+          {({ isPlaceholder, selectedText }) =>
+            isPlaceholder ? placeholder : selectedText
+          }
+        </Select.Value>
+      </Select.Trigger>
+      <Select.Popover>
+        <ListBox>
+          {options.map((option) => (
+            <ListBoxItem key={option} id={option} textValue={option}>
+              {option}
+            </ListBoxItem>
+          ))}
+        </ListBox>
+      </Select.Popover>
+    </Select>
   );
 }
 
@@ -263,19 +302,19 @@ function ChannelCard({
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-        className="group flex items-center gap-4 rounded-3xl border border-line bg-surface p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-card"
+        className="group border-border bg-surface hover:border-accent/50 hover:shadow-card flex min-h-16 items-center gap-4 rounded-3xl border p-4 no-underline transition-all duration-200 hover:-translate-y-0.5"
       >
-        <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-accent-soft text-accent">
+        <span className="bg-accent-soft text-accent grid size-11 shrink-0 place-items-center rounded-2xl">
           {icon}
         </span>
         <span className="flex flex-col gap-0.5">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-foreground-muted">
+          <span className="text-muted text-[0.7rem] font-semibold tracking-[0.12em] uppercase">
             {label}
           </span>
-          <span className="text-sm font-semibold text-foreground group-hover:text-accent">
+          <span className="text-foreground group-hover:text-accent text-sm font-semibold">
             {value}
           </span>
-          <span className="text-xs text-foreground-muted">{caption}</span>
+          <span className="text-muted text-xs">{caption}</span>
         </span>
       </a>
     </li>

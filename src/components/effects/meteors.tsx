@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Aceternity-style meteor shower for the featured pricing card.
+ * Meteor shower behind the featured pricing card.
  *
  * Positions and delays are derived deterministically from the index rather than
  * `Math.random()` so the server and client render identical markup (no
@@ -31,7 +31,7 @@ export function Meteors({
         <span
           key={index}
           className={cn(
-            "absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] animate-meteor rounded-full bg-accent shadow-[0_0_0_1px_rgb(var(--accent)/0.12)]",
+            "absolute left-1/2 top-1/2 h-0.5 w-0.5 rotate-[215deg] animate-meteor rounded-full bg-accent shadow-[0_0_0_1px_--alpha(var(--color-accent)/12%)]",
             "before:absolute before:top-1/2 before:h-px before:w-[50px] before:-translate-y-1/2 before:bg-gradient-to-r before:from-accent before:to-transparent before:content-['']",
             className,
           )}

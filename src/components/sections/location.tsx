@@ -1,13 +1,14 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { Card, Separator } from "@heroui/react";
 import { ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
 
-import { ButtonLink } from "@/components/primitives/button-link";
+import { InstagramGlyph } from "@/components/icons";
+import { CtaLink } from "@/components/primitives/cta-link";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
-import { InstagramGlyph } from "@/components/ui/brand-icons";
 import { mapDirectionsUrl, mapEmbedSrc, siteConfig } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
 import { whatsappUrl } from "@/lib/utils";
@@ -30,9 +31,9 @@ export function Location() {
         description={t.location.description}
       />
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal className="h-full">
-          <div className="h-full overflow-hidden rounded-4xl border border-line bg-surface shadow-card">
+          <Card className="shadow-card h-full overflow-hidden rounded-4xl p-0">
             {/*
               Keyless Google Maps embed. `loading="lazy"` keeps the iframe out of
               the critical path; swap `mapEmbedSrc` for the centre's real place
@@ -43,43 +44,44 @@ export function Location() {
               src={mapEmbedSrc}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="h-[22rem] w-full border-0 grayscale-[0.15] dark:grayscale-[0.35] dark:invert-[0.9] dark:hue-rotate-180 lg:h-full lg:min-h-[26rem]"
+              className="h-64 w-full border-0 grayscale-[0.15] sm:h-[22rem] lg:h-full lg:min-h-[26rem] dark:grayscale-[0.35] dark:invert-[0.9] dark:hue-rotate-180"
             />
-          </div>
+          </Card>
         </Reveal>
 
         <Reveal delay={0.1} className="h-full">
-          <div className="flex h-full flex-col gap-6 rounded-4xl border border-line bg-surface p-7 sm:p-8">
+          <Card className="flex h-full flex-col gap-6 rounded-4xl p-6 sm:p-8">
             <div>
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-foreground-muted">
+              <p className="text-muted text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 {t.location.addressLabel}
               </p>
-              <p className="mt-3 flex items-start gap-2.5 font-display text-lg font-semibold leading-snug text-foreground">
+              <p className="font-display text-foreground mt-3 flex items-start gap-2.5 text-base leading-snug font-semibold sm:text-lg">
                 <MapPin
                   aria-hidden="true"
-                  className="mt-0.5 size-5 shrink-0 text-accent"
+                  className="text-accent mt-0.5 size-5 shrink-0"
                   strokeWidth={2.2}
                 />
                 {location.city}, {location.region}, {location.country}
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+              <p className="text-muted mt-3 text-sm leading-relaxed">
                 {t.location.addressNote}
               </p>
             </div>
 
-            <div className="border-t border-line pt-5">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-foreground-muted">
+            <div>
+              <Separator className="mb-5" />
+              <p className="text-muted text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 {t.location.detailsLabel}
               </p>
               <ul className="mt-3 space-y-2">
                 {t.location.details.map((detail) => (
                   <li
                     key={detail}
-                    className="flex items-start gap-2 text-sm text-foreground"
+                    className="text-foreground flex items-start gap-2 text-sm"
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"
+                      className="bg-accent mt-1.5 size-1.5 shrink-0 rounded-full"
                     />
                     {detail}
                   </li>
@@ -87,31 +89,34 @@ export function Location() {
               </ul>
             </div>
 
-            <ul className="grid gap-2.5 border-t border-line pt-5">
-              <ContactRow
-                icon={<MessageCircle className="size-4" strokeWidth={2.2} />}
-                label={t.contact.channels.whatsappLabel}
-                value={contact.whatsappDisplay}
-                href={waLink}
-                external
-              />
-              <ContactRow
-                icon={<Phone className="size-4" strokeWidth={2.2} />}
-                label={t.contact.channels.phoneLabel}
-                value={contact.officePhoneDisplay}
-                href={contact.officePhoneHref}
-              />
-              <ContactRow
-                icon={<InstagramGlyph className="size-4" />}
-                label={t.contact.channels.instagramLabel}
-                value={`@${contact.instagramHandle}`}
-                href={contact.instagramUrl}
-                external
-              />
-            </ul>
+            <div>
+              <Separator className="mb-5" />
+              <ul className="grid gap-1.5">
+                <ContactRow
+                  icon={<MessageCircle className="size-4" strokeWidth={2.2} />}
+                  label={t.contact.channels.whatsappLabel}
+                  value={contact.whatsappDisplay}
+                  href={waLink}
+                  external
+                />
+                <ContactRow
+                  icon={<Phone className="size-4" strokeWidth={2.2} />}
+                  label={t.contact.channels.phoneLabel}
+                  value={contact.officePhoneDisplay}
+                  href={contact.officePhoneHref}
+                />
+                <ContactRow
+                  icon={<InstagramGlyph className="size-4" />}
+                  label={t.contact.channels.instagramLabel}
+                  value={`@${contact.instagramHandle}`}
+                  href={contact.instagramUrl}
+                  external
+                />
+              </ul>
+            </div>
 
             <div className="mt-auto flex flex-col gap-2.5 pt-2 sm:flex-row">
-              <ButtonLink
+              <CtaLink
                 href={mapDirectionsUrl}
                 external
                 variant="outline"
@@ -119,13 +124,18 @@ export function Location() {
               >
                 {t.location.directionsCta}
                 <ExternalLink className="size-4" strokeWidth={2.2} />
-              </ButtonLink>
-              <ButtonLink href={waLink} external variant="primary" className="flex-1">
+              </CtaLink>
+              <CtaLink
+                href={waLink}
+                external
+                variant="primary"
+                className="flex-1"
+              >
                 <MessageCircle className="size-4" strokeWidth={2.2} />
                 {t.location.contactCta}
-              </ButtonLink>
+              </CtaLink>
             </div>
-          </div>
+          </Card>
         </Reveal>
       </div>
     </Section>
@@ -150,16 +160,16 @@ function ContactRow({
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-        className="group flex items-center gap-3 rounded-2xl border border-transparent px-2 py-2 transition-colors hover:border-line hover:bg-surface-muted"
+        className="group hover:border-border hover:bg-surface-secondary flex min-h-12 items-center gap-3 rounded-2xl border border-transparent px-2 py-2 no-underline transition-colors"
       >
-        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
+        <span className="bg-accent-soft text-accent grid size-9 shrink-0 place-items-center rounded-xl">
           {icon}
         </span>
         <span className="flex flex-col leading-tight">
-          <span className="text-[0.7rem] font-medium uppercase tracking-[0.1em] text-foreground-muted">
+          <span className="text-muted text-[0.7rem] font-medium tracking-[0.1em] uppercase">
             {label}
           </span>
-          <span className="text-sm font-semibold text-foreground group-hover:text-accent">
+          <span className="text-foreground group-hover:text-accent text-sm font-semibold">
             {value}
           </span>
         </span>

@@ -10,7 +10,7 @@ const SPEEDS = {
   slow: "68s",
 } as const;
 
-interface InfiniteMovingCardsProps {
+interface MarqueeProps {
   children: ReactNode;
   /** Rendered twice so the CSS translate can loop seamlessly. */
   speed?: keyof typeof SPEEDS;
@@ -21,17 +21,17 @@ interface InfiniteMovingCardsProps {
 
 /**
  * Seamless marquee row. The track holds two identical copies of the content and
- * translates by exactly -50%, which is why the loop has no visible seam. Unlike
- * the original Aceternity implementation this duplicates in React instead of
- * cloning DOM nodes in an effect, so it renders correctly on the server too.
+ * translates by exactly -50%, which is why the loop has no visible seam. The
+ * duplication happens in React rather than by cloning DOM nodes in an effect,
+ * so the row renders correctly on the server as well.
  */
-export function InfiniteMovingCards({
+export function Marquee({
   children,
   speed = "normal",
   direction = "left",
   pauseOnHover = true,
   className,
-}: InfiniteMovingCardsProps) {
+}: MarqueeProps) {
   return (
     <div
       className={cn(

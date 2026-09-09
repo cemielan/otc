@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Dropdown, buttonVariants } from "@heroui/react";
 import { Check, Globe } from "lucide-react";
 
 import { locales, localeMeta, type Locale } from "@/i18n/config";
@@ -11,91 +10,64 @@ import { cn } from "@/lib/utils";
 /**
  * Language menu (English / Bahasa Indonesia / 简体中文).
  *
- * Implemented as a small popover rather than a native <select> so it can match
- * the rest of the design, with Escape-to-close and click-outside handling kept
- * explicit.
+ * HeroUI's Dropdown is built on React Aria's Menu, so keyboard navigation,
+ * Escape-to-close, focus restoration and click-outside behaviour come from the
+ * library instead of being hand-rolled here.
  */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, setLocale, t } = useI18n();
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    function onPointerDown(event: MouseEvent | TouchEvent) {
-      if (!containerRef.current?.contains(event.target as Node)) setOpen(false);
-    }
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
-    }
-
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("touchstart", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("touchstart", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
-  function choose(next: Locale) {
-    setLocale(next);
-    setOpen(false);
-  }
 
   return (
-    <div ref={containerRef} className={cn("relative", className)}>
-      <button
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        aria-haspopup="listbox"
-        aria-expanded={open}
+    <Dropdown.Root>
+      {/*
+        Dropdown.Trigger renders a button but is typed against React Aria's, so
+        the HeroUI button styling comes from the exported `buttonVariants`.
+        HeroUI's own `.dropdown__trigger` class sets `display: inline-block`
+        and is imported after `button.css`, so on a same-specificity tie it
+        silently wins over `buttonVariants()`'s `inline-flex` and collapses the
+        icon/label into stacked inline content. `inline-flex items-center
+        justify-center` are added here as bare utility classes (not folded into
+        buttonVariants) so they land in Tailwind's `utilities` layer, which
+        outranks HeroUI's `components` layer regardless of import order.
+      */}
+      <Dropdown.Trigger
         aria-label={t.common.language}
-        className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line bg-surface px-3 text-xs font-semibold text-foreground transition-colors hover:border-accent/60 hover:text-accent"
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "inline-flex h-11 items-center justify-center gap-1.5 rounded-full px-3 sm:h-10",
+          className,
+        )}
       >
         <Globe className="size-4" strokeWidth={2} />
-        <span>{localeMeta[locale].short}</span>
-      </button>
+        <span className="hidden text-xs font-semibold min-[22rem]:inline">
+          {localeMeta[locale].short}
+        </span>
+      </Dropdown.Trigger>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.ul
-            role="listbox"
-            aria-label={t.common.language}
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.16, ease: "easeOut" }}
-            className="absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-2xl border border-line bg-surface p-1.5 shadow-lift"
-          >
-            {locales.map((option) => {
-              const active = option === locale;
-              return (
-                <li key={option} role="option" aria-selected={active}>
-                  <button
-                    type="button"
-                    onClick={() => choose(option)}
-                    lang={localeMeta[option].htmlLang}
-                    className={cn(
-                      "flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-left text-sm transition-colors",
-                      active
-                        ? "bg-accent-soft font-semibold text-foreground"
-                        : "text-foreground-muted hover:bg-surface-muted hover:text-foreground",
-                    )}
-                  >
-                    {localeMeta[option].label}
-                    {active ? (
-                      <Check className="size-4 text-accent" strokeWidth={2.5} />
-                    ) : null}
-                  </button>
-                </li>
-              );
-            })}
-          </motion.ul>
-        ) : null}
-      </AnimatePresence>
-    </div>
+      <Dropdown.Popover placement="bottom end" className="min-w-48">
+        <Dropdown.Menu
+          aria-label={t.common.language}
+          selectionMode="single"
+          selectedKeys={[locale]}
+          onAction={(key) => setLocale(key as Locale)}
+        >
+          {locales.map((option) => (
+            <Dropdown.Item
+              key={option}
+              id={option}
+              textValue={localeMeta[option].label}
+              className="justify-between gap-3"
+            >
+              <span lang={localeMeta[option].htmlLang}>
+                {localeMeta[option].label}
+              </span>
+              {option === locale ? (
+                <Check className="text-accent size-4" strokeWidth={2.5} />
+              ) : null}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown.Popover>
+    </Dropdown.Root>
   );
 }

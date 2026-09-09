@@ -33,7 +33,7 @@ export const siteConfig = {
   },
   location: {
     /** PLACEHOLDER — district-level only; add the street address when confirmed. */
-    mapQuery: "Jakarta Barat, DKI Jakarta, Indonesia",
+    mapQuery: "Bimbel Omicron",
     city: "Jakarta Barat",
     region: "DKI Jakarta",
     country: "Indonesia",

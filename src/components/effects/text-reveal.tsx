@@ -47,11 +47,15 @@ function tokenize(segments: readonly TextSegment[]): Token[] {
 }
 
 /**
- * Aceternity-style "text generate" effect: words fade in out of a blur, one
- * after another. Takes segments rather than a single string so a heading can
+ * Word-by-word entrance for the hero heading: each word fades in out of a blur,
+ * one after another. Takes segments rather than a single string so a heading can
  * mix plain and accented phrases while sharing one continuous stagger.
+ *
+ * This is a local Framer Motion effect — HeroUI has no equivalent, and it is
+ * decoration only, so it never gates access to the copy (the text is in the
+ * server-rendered HTML either way).
  */
-export function TextGenerateEffect({
+export function TextReveal({
   segments,
   className,
   delay = 0,

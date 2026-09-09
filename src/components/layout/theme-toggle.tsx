@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { Button } from "@heroui/react";
 import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
@@ -23,15 +24,12 @@ export function ThemeToggle({ className }: { className?: string }) {
   const label = isDark ? t.common.lightMode : t.common.darkMode;
 
   return (
-    <button
-      type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+    <Button
+      variant="outline"
+      isIconOnly
       aria-label={label}
-      title={label}
-      className={cn(
-        "relative grid size-10 place-items-center rounded-full border border-line bg-surface text-foreground transition-colors hover:border-accent/60 hover:text-accent",
-        className,
-      )}
+      onPress={() => setTheme(isDark ? "light" : "dark")}
+      className={cn("size-11 rounded-full sm:size-10", className)}
     >
       {mounted ? (
         <motion.span
@@ -48,8 +46,8 @@ export function ThemeToggle({ className }: { className?: string }) {
           )}
         </motion.span>
       ) : (
-        <span className="size-[1.05rem] rounded-full bg-line" />
+        <span className="bg-border size-[1.05rem] rounded-full" />
       )}
-    </button>
+    </Button>
   );
 }
