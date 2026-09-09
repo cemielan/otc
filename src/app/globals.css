@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    --bg: 250 247 242;
+    --surface: 255 255 255;
+    --surface-2: 244 240 234;
+    --fg: 20 17 15;
+    --fg-muted: 100 92 85;
+    --border: 226 219 210;
+
+    --panel: 20 18 16;
+    --panel-2: 38 34 31;
+    --panel-fg: 246 242 237;
+
+    --accent: 237 133 100;
+    --accent-soft: 253 232 224;
+    --accent-fg: 38 15 8;
+
+    --brand-yellow: 250 204 21;
+    --brand-red: 205 43 32;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --bg: 12 11 10;
+    --surface: 24 22 21;
+    --surface-2: 33 31 29;
+    --fg: 245 241 236;
+    --fg-muted: 165 157 149;
+    --border: 48 44 41;
+
+    --panel: 24 22 21;
+    --panel-2: 40 37 34;
+    --panel-fg: 246 242 237;
+
+    --accent: 241 148 118;
+    --accent-soft: 61 32 23;
+    --accent-fg: 24 10 5;
+
+    --brand-yellow: 250 204 21;
+    --brand-red: 232 74 62;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor scrolling so section headings clear the sticky navbar. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-accent/30;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground-muted;
+  }
+
+  /* Faint blueprint grid used behind the hero and the closing CTA. */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, rgb(var(--fg) / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--fg) / 0.055) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
