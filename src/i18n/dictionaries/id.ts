@@ -39,8 +39,8 @@ export const id: Dictionary = {
     stats: [
       { value: "4", label: "Mata pelajaran inti" },
       { value: "3", label: "Kurikulum yang dilayani" },
-      { value: "3", label: "Format kelas" },
-      { value: "1-10", label: "Siswa per kelas" },
+      { value: "2", label: "Format kelas" },
+      { value: "1-5", label: "Siswa per kelas" },
     ],
     floatingCard: {
       title: "Checkpoint sampai A Level",
@@ -131,7 +131,7 @@ export const id: Dictionary = {
         },
         {
           title: "Menjaga kelas tetap kecil",
-          body: "Format normal, semi-privat dan privat, agar perhatian menyesuaikan cara belajar tiap siswa.",
+          body: "Format semi-privat dan privat, agar perhatian menyesuaikan cara belajar tiap siswa.",
         },
         {
           title: "Menghormati setiap kurikulum",
@@ -152,37 +152,25 @@ export const id: Dictionary = {
   },
   packages: {
     eyebrow: "Paket",
-    title: "Tiga format kelas. Satu standar pengajaran.",
+    title: "Dua format kelas. Satu standar pengajaran.",
     description:
       "Semua format mengikuti pemetaan silabus dan pengajar yang sama — yang berbeda hanyalah seberapa besar perhatian yang jadi milik Anda.",
-    perMonth: "/ bulan",
-    perSubject: "per mata pelajaran",
     popular: "Paling banyak dipilih",
     capacityLabel: "Ukuran kelas",
     studentsUnit: "siswa",
     consultPrice: "Konsultasi dengan kami",
-    consultNote: "Harga disesuaikan dengan jadwal dan jumlah mata pelajaran.",
+    consultNote:
+      "Harga ditentukan case-by-case sesuai kurikulum, jenjang, dan kebutuhan siswa — tidak ada daftar harga tetap.",
     consultCta: "Konsultasi via WhatsApp",
-    selectCta: "Tanya kelas ini",
     includesLabel: "Yang Anda dapatkan",
     footnote:
-      "Harga di atas berlaku per mata pelajaran per bulan. Hubungi kami untuk jadwal dan ketersediaan terkini sesuai jenjang dan kurikulum.",
+      "Tidak ada daftar harga tetap — setiap biaya ditentukan case-by-case sesuai kurikulum, jenjang, dan jumlah mata pelajaran. Hubungi kami via WhatsApp untuk penawaran.",
     plans: {
-      normal: {
-        name: "Kelas Normal",
-        tagline: "Belajar berkelompok yang menjaga ritme.",
-        features: [
-          "6-10 siswa per kelas",
-          "8 sesi per bulan, masing-masing 90 menit",
-          "Modul dan lembar kerja sesuai kurikulum",
-          "Ringkasan kemajuan bulanan",
-        ],
-      },
       semiPrivate: {
         name: "Kelas Semi-Privat",
         tagline: "Jalan tengah yang paling banyak dipilih siswa.",
         features: [
-          "2-4 siswa per kelas",
+          "Maksimal 5 siswa per kelas",
           "8 sesi per bulan, masing-masing 90 menit",
           "Tempo menyesuaikan topik yang masih lemah",
           "Klinik soal ujian sebelum masa ujian",
@@ -235,7 +223,7 @@ export const id: Dictionary = {
     detailsLabel: "Perlu diketahui",
     details: [
       "Kelas berlangsung di tempat (on-site)",
-      "Format normal, semi-privat dan privat",
+      "Format semi-privat (maksimal 5 siswa) dan privat",
       "Tanyakan slot waktu yang tersedia",
     ],
   },

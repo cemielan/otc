@@ -37,8 +37,8 @@ export const en = {
     stats: [
       { value: "4", label: "Core subjects" },
       { value: "3", label: "Curricula covered" },
-      { value: "3", label: "Class formats" },
-      { value: "1-10", label: "Students per class" },
+      { value: "2", label: "Class formats" },
+      { value: "1-5", label: "Students per class" },
     ],
     floatingCard: {
       title: "Checkpoint to A Level",
@@ -129,7 +129,7 @@ export const en = {
         },
         {
           title: "Keep classes small",
-          body: "Normal, semi-private and private formats, so attention matches how each student learns.",
+          body: "Semi-private and private formats, so attention matches how each student learns.",
         },
         {
           title: "Respect every curriculum",
@@ -150,37 +150,25 @@ export const en = {
   },
   packages: {
     eyebrow: "Packages",
-    title: "Three class formats. One standard of teaching.",
+    title: "Two class formats. One standard of teaching.",
     description:
       "Every format follows the same syllabus mapping and the same tutors — what changes is how much of their attention is yours.",
-    perMonth: "/ month",
-    perSubject: "per subject",
     popular: "Most chosen",
     capacityLabel: "Class size",
     studentsUnit: "students",
     consultPrice: "Consult with us",
-    consultNote: "Priced around your schedule and subject load.",
+    consultNote:
+      "Priced case-by-case based on curriculum, grade and student needs — no fixed price list.",
     consultCta: "Consult on WhatsApp",
-    selectCta: "Ask about this class",
     includesLabel: "What you get",
     footnote:
-      "Prices shown are per subject, per month. Message us for the current timetable and availability for your grade and curriculum.",
+      "There is no fixed pricelist — every fee is quoted case-by-case based on curriculum, grade and subject load. Message us on WhatsApp for a quote.",
     plans: {
-      normal: {
-        name: "Normal Class",
-        tagline: "Group learning that keeps momentum.",
-        features: [
-          "6-10 students per class",
-          "8 sessions per month, 90 minutes each",
-          "Curriculum-mapped modules and worksheets",
-          "Monthly progress summary",
-        ],
-      },
       semiPrivate: {
         name: "Semi-Private Class",
         tagline: "The middle ground most students pick.",
         features: [
-          "2-4 students per class",
+          "Up to 5 students per class",
           "8 sessions per month, 90 minutes each",
           "Pace adjusted to the group's weak topics",
           "Past-paper clinic before exam periods",
@@ -233,7 +221,7 @@ export const en = {
     detailsLabel: "Good to know",
     details: [
       "On-site classes at the centre",
-      "Normal, semi-private and private formats",
+      "Semi-private (max 5 students) and private formats",
       "Ask us about available time slots",
     ],
   },

@@ -10,7 +10,7 @@ import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
 import { packages, siteConfig, type PackagePlan } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
-import { cn, formatRupiah, whatsappUrl } from "@/lib/utils";
+import { cn, whatsappUrl } from "@/lib/utils";
 
 export function Packages() {
   const { t } = useI18n();
@@ -25,7 +25,7 @@ export function Packages() {
         className="mx-auto items-center text-center"
       />
 
-      <div className="mt-10 grid items-stretch gap-4 sm:gap-5 lg:mt-12 lg:grid-cols-3">
+      <div className="mx-auto mt-10 grid max-w-3xl items-stretch gap-4 sm:gap-5 lg:mt-12 lg:grid-cols-2">
         {packages.map((plan, index) => (
           <Reveal key={plan.id} delay={index * 0.08} className="h-full">
             <PlanCard plan={plan} />
@@ -45,8 +45,6 @@ export function Packages() {
 function PlanCard({ plan }: { plan: PackagePlan }) {
   const { t } = useI18n();
   const copy = t.packages.plans[plan.id];
-  const price = plan.priceIDR;
-  const isConsult = price === null;
 
   /**
    * Both CTAs open WhatsApp with the plan already named, so an enquiry arrives
@@ -100,30 +98,12 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
         />
 
         <div>
-          {isConsult ? (
-            <>
-              <p className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {t.packages.consultPrice}
-              </p>
-              <p className={cn("mt-1.5 text-sm", mutedText)}>
-                {t.packages.consultNote}
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="flex flex-wrap items-baseline gap-1.5">
-                <span className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                  {formatRupiah(price)}
-                </span>
-                <span className={cn("text-sm font-medium", mutedText)}>
-                  {t.packages.perMonth}
-                </span>
-              </p>
-              <p className={cn("mt-1.5 text-sm", mutedText)}>
-                {t.packages.perSubject}
-              </p>
-            </>
-          )}
+          <p className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            {t.packages.consultPrice}
+          </p>
+          <p className={cn("mt-1.5 text-sm", mutedText)}>
+            {t.packages.consultNote}
+          </p>
 
           <Chip
             variant={plan.featured ? "tertiary" : "secondary"}
@@ -172,11 +152,11 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
           external
           size="lg"
           fullWidth
-          variant={plan.featured || isConsult ? "primary" : "outline"}
+          variant="primary"
           className="mt-8"
         >
           <MessageCircle className="size-4" strokeWidth={2.2} />
-          {isConsult ? t.packages.consultCta : t.packages.selectCta}
+          {t.packages.consultCta}
         </CtaLink>
       </div>
     </Card>

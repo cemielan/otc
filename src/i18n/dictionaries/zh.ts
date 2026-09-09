@@ -38,8 +38,8 @@ export const zh: Dictionary = {
     stats: [
       { value: "4", label: "核心科目" },
       { value: "3", label: "覆盖课程体系" },
-      { value: "3", label: "班型选择" },
-      { value: "1-10", label: "每班人数" },
+      { value: "2", label: "班型选择" },
+      { value: "1-5", label: "每班人数" },
     ],
     floatingCard: {
       title: "从 Checkpoint 到 A Level",
@@ -129,7 +129,7 @@ export const zh: Dictionary = {
         },
         {
           title: "保持小班教学",
-          body: "普通班、半私教班与私教班三种班型，让关注度契合每位学生的学习方式。",
+          body: "半私教班与私教班两种班型，让关注度契合每位学生的学习方式。",
         },
         {
           title: "尊重每套课程体系",
@@ -145,37 +145,24 @@ export const zh: Dictionary = {
   },
   packages: {
     eyebrow: "班型与价格",
-    title: "三种班型，同一套教学标准。",
+    title: "两种班型，同一套教学标准。",
     description:
       "所有班型采用相同的大纲对应方式与相同的师资——差别只在于老师有多少注意力属于你。",
-    perMonth: "/ 月",
-    perSubject: "每科",
     popular: "最多人选择",
     capacityLabel: "班级规模",
     studentsUnit: "人",
     consultPrice: "欢迎咨询",
-    consultNote: "按你的时间安排与科目数量报价。",
+    consultNote: "根据课程体系、年级与学生需求个案报价，没有固定价目表。",
     consultCta: "WhatsApp 咨询",
-    selectCta: "咨询此班型",
     includesLabel: "包含内容",
     footnote:
-      "以上价格为每科每月费用。请联系我们了解相应年级与课程体系的最新课表与名额。",
+      "没有固定价目表——所有费用均根据课程体系、年级与科目数量个案报价。请通过 WhatsApp 联系我们获取报价。",
     plans: {
-      normal: {
-        name: "普通班",
-        tagline: "小组学习，保持稳定节奏。",
-        features: [
-          "每班 6-10 人",
-          "每月 8 次课，每次 90 分钟",
-          "对应课程大纲的讲义与练习",
-          "每月学习进度小结",
-        ],
-      },
       semiPrivate: {
         name: "半私教班",
         tagline: "多数学生选择的折中方案。",
         features: [
-          "每班 2-4 人",
+          "每班最多 5 人",
           "每月 8 次课，每次 90 分钟",
           "按小组薄弱知识点调整进度",
           "考前真题专项训练",
@@ -223,7 +210,7 @@ export const zh: Dictionary = {
     contactCta: "咨询路线",
     mapTitle: "显示 Omicron 补习中心所在西雅加达区域的地图",
     detailsLabel: "温馨提示",
-    details: ["在中心现场上课", "普通班、半私教班与私教班", "欢迎咨询可选时段"],
+    details: ["在中心现场上课", "半私教班（最多 5 人）与私教班", "欢迎咨询可选时段"],
   },
   contact: {
     eyebrow: "联系我们",

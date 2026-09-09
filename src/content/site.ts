@@ -8,10 +8,11 @@
  * stand-ins so the page renders completely. Replace them with the real ones:
  *   1. `contact.officePhoneDisplay` — the landline / home number, if it differs
  *      from the WhatsApp number.
- *   2. `location.*` — the full street address and a real Google Maps place
- *      embed (Maps > Share > Embed a map > copy the iframe `src`).
- *   3. `packages[].priceIDR` and `schedule.*` — the actual pricelist and
- *      session format.
+ *   2. `location.coords` — the centre's real latitude/longitude (from the
+ *      Google Maps share link, the numbers after the `@`), for a pin that
+ *      lines up exactly. The map already centers on `streetAddress`, which
+ *      avoids Google's business info card (see `mapEmbedSrc` below).
+ *   3. `schedule.*` — the actual session format.
  *   4. `url` — the production domain (also used for canonical + sitemap URLs).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -23,17 +24,32 @@ export const siteConfig = {
   url: "https://omicrontuitioncentre.com",
   contact: {
     /** International format, no "+" and no separators — required by wa.me. */
-    whatsappE164: "6285147283429",
-    whatsappDisplay: "0851-4728-3429",
+    whatsappE164: "62816747502",
+    whatsappDisplay: "0816-747-502",
     /** PLACEHOLDER — same as WhatsApp until the landline is confirmed. */
-    officePhoneDisplay: "0851-4728-3429",
-    officePhoneHref: "tel:+6285147283429",
+    officePhoneDisplay: "0816-747-502",
+    officePhoneHref: "tel:+62816747502",
     instagramHandle: "bimbelomicron",
     instagramUrl: "https://www.instagram.com/bimbelomicron/",
   },
   location: {
-    /** PLACEHOLDER — district-level only; add the street address when confirmed. */
+    /** Business name — used for the "Open in Google Maps" deep link, where its full listing (reviews, photos) is the point. */
     mapQuery: "Bimbel Omicron",
+    /**
+     * Full street address — used to center the in-page map embed instead of
+     * `mapQuery`. Centering on the business name makes Google's client-side
+     * script try to load a "place info" card inside the iframe, which fails
+     * and leaves a stuck "Place info couldn't load" box; an address is just
+     * a geocoded point with no card to fetch.
+     */
+    streetAddress:
+      "Jl. Taman Surya 5 DD2 No.23, RT.5/RW.17, Pegadungan, Kalideres, Jakarta Barat 11830",
+    /**
+     * PLACEHOLDER — real lat/lng, once known, gives an exact pin instead of
+     * the address-geocoded approximation. Get these from the Google Maps
+     * share link: Share > Copy link > the two numbers after `@`.
+     */
+    coords: null as { lat: number; lng: number } | null,
     city: "Jakarta Barat",
     region: "DKI Jakarta",
     country: "Indonesia",
@@ -44,10 +60,16 @@ export const siteConfig = {
   },
 } as const;
 
-/** Keyless Google Maps embed derived from `location.mapQuery`. */
-export const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(
-  siteConfig.location.mapQuery,
-)}&output=embed`;
+/**
+ * Keyless Google Maps embed, centered on `location.coords` if set, else the
+ * street address — either way a plain geocoded point, not the business name,
+ * so Google's script never tries (and fails) to load a place-info card.
+ */
+export const mapEmbedSrc = (() => {
+  const { coords, streetAddress } = siteConfig.location;
+  const query = coords ? `${coords.lat},${coords.lng}` : streetAddress;
+  return `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=16&output=embed`;
+})();
 
 /** "Open in Google Maps" deep link for the directions button. */
 export const mapDirectionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -72,38 +94,26 @@ export const curricula: readonly { id: CurriculumId; stages: number }[] = [
   { id: "tka", stages: 1 },
 ] as const;
 
-export type PackageId = "normal" | "semiPrivate" | "private";
+export type PackageId = "semiPrivate" | "private";
 
 export interface PackagePlan {
   id: PackageId;
-  /** Monthly fee per subject in IDR — `null` means "consult with us". */
-  priceIDR: number | null;
-  /** Students sharing one class. */
+  /** Students sharing one class. Pricing is always quoted case-by-case on WhatsApp. */
   capacity: string;
   featured: boolean;
   /** Number of feature bullets to read from the dictionary for this plan. */
   featureCount: number;
 }
 
-/** PLACEHOLDER PRICING — confirm with the Omicron team before publishing. */
 export const packages: readonly PackagePlan[] = [
   {
-    id: "normal",
-    priceIDR: 500_000,
-    capacity: "6-10",
-    featured: false,
-    featureCount: 4,
-  },
-  {
     id: "semiPrivate",
-    priceIDR: 900_000,
-    capacity: "2-4",
+    capacity: "2-5",
     featured: true,
     featureCount: 5,
   },
   {
     id: "private",
-    priceIDR: null,
     capacity: "1",
     featured: false,
     featureCount: 5,

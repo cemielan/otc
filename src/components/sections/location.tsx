@@ -33,11 +33,12 @@ export function Location() {
 
       <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal className="h-full">
-          <Card className="shadow-card h-full overflow-hidden rounded-4xl p-0">
+          <Card className="shadow-card relative h-full overflow-hidden rounded-4xl p-0">
             {/*
               Keyless Google Maps embed. `loading="lazy"` keeps the iframe out of
-              the critical path; swap `mapEmbedSrc` for the centre's real place
-              embed once the street address is confirmed.
+              the critical path; once `location.coords` is filled in (see
+              site.ts), this centers on the pin directly instead of searching
+              for the business by name, which drops Google's info-card popup.
             */}
             <iframe
               title={t.location.mapTitle}
@@ -46,6 +47,16 @@ export function Location() {
               referrerPolicy="no-referrer-when-downgrade"
               className="h-64 w-full border-0 grayscale-[0.15] sm:h-[22rem] lg:h-full lg:min-h-[26rem] dark:grayscale-[0.35] dark:invert-[0.9] dark:hue-rotate-180"
             />
+
+            <a
+              href={mapDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-surface/95 text-foreground hover:bg-surface shadow-card absolute top-4 right-4 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold no-underline backdrop-blur-sm transition-colors"
+            >
+              {t.location.directionsCta}
+              <ExternalLink className="size-3.5" strokeWidth={2.4} />
+            </a>
           </Card>
         </Reveal>
 
