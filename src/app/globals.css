@@ -231,6 +231,22 @@
 }
 
 /*
+ * HeroUI rounds its popovers (dropdown, select, autocomplete) to 24px and pads
+ * them by 4px, but rounds the items inside to 16px — so a hovered item's
+ * corner is not concentric with the popover's and the two curves visibly
+ * disagree. Nesting requires inner = outer − padding, i.e. 24 − 4 = 20px.
+ *
+ * Declared in the `components` layer, after HeroUI's own import, so it wins on
+ * the specificity tie while a per-instance `rounded-*` utility still overrides.
+ */
+@layer components {
+  .menu-item,
+  .list-box-item {
+    border-radius: 20px;
+  }
+}
+
+/*
  * Light/dark switch. The toggle drives this through the View Transitions API
  * (see theme-toggle.tsx), so the whole page crossfades as one composited
  * snapshot. Transitioning colours on every element instead makes the browser
