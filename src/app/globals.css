@@ -171,22 +171,6 @@
     overflow-x: hidden;
   }
 
-  /*
-   * Fallback fade for the light/dark switch: every element's own colour
-   * tokens repaint instantly when `.dark` toggles, so the transition has to
-   * live here rather than on <html>/<body> alone. Utility classes that
-   * already set their own `transition-*` (hover states, etc.) come from
-   * Tailwind's utilities layer, which sits after `base` and wins on ties, so
-   * this never fights a component's own transition.
-   */
-  *,
-  *::before,
-  *::after {
-    transition-property: background-color, border-color, color, fill, stroke;
-    transition-duration: 400ms;
-    transition-timing-function: ease-out;
-  }
-
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -246,9 +230,26 @@
   border: 1.5px solid var(--color-border);
 }
 
+/*
+ * Light/dark switch. The toggle drives this through the View Transitions API
+ * (see theme-toggle.tsx), so the whole page crossfades as one composited
+ * snapshot. Transitioning colours on every element instead makes the browser
+ * animate hundreds of paints at once, which is what felt sluggish.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
+  animation-timing-function: ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 
   *,

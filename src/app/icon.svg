@@ -1,4 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="9" fill="#1f1a17" />
-  <text x="16" y="23" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="20" fill="#ffd84d" text-anchor="middle">O</text>
+  <!--
+    The "O" of the OMICRON wordmark: heavy, oblique, white. Drawn as a skewed
+    ring rather than as <text> so it never depends on a font being installed.
+  -->
+  <ellipse
+    cx="16"
+    cy="16"
+    rx="6.5"
+    ry="7.6"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="4.5"
+    transform="skewX(-12) translate(3.4 0)"
+  />
 </svg>
