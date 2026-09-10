@@ -61,7 +61,7 @@ export function Programs() {
                   </span>
                 </div>
 
-                <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+                <div className="flex flex-1 flex-col gap-3.5 p-5 sm:p-6">
                   <div>
                     <Card.Title className="font-display text-foreground text-lg leading-tight font-bold tracking-[-0.01em]">
                       {copy.name}
@@ -71,7 +71,7 @@ export function Programs() {
                     </Card.Description>
                   </div>
 
-                  <div className="mt-auto">
+                  <div>
                     <p className="text-muted text-[0.65rem] font-bold tracking-[0.16em] uppercase">
                       {t.programs.levelsLabel}
                     </p>
