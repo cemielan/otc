@@ -231,10 +231,13 @@
 }
 
 /*
- * HeroUI rounds its popovers (dropdown, select, autocomplete) to 24px and pads
- * them by 4px, but rounds the items inside to 16px — so a hovered item's
- * corner is not concentric with the popover's and the two curves visibly
- * disagree. Nesting requires inner = outer − padding, i.e. 24 − 4 = 20px.
+ * HeroUI's popovers (dropdown, select, autocomplete) round to
+ * `min(32px, var(--radius-3xl))`; with this project's `--radius: 1rem`,
+ * `--radius-3xl` is 48px, so the popover corner is a flat 32px. The list/menu
+ * inside it pads by 4px (`p-1`) before its items round to 16px — a smaller
+ * inset than radius, so a hovered item's corner cuts inside the popover's
+ * curve instead of following it. Concentric nesting needs inner radius =
+ * outer radius − inset, i.e. 32 − 4 = 28px.
  *
  * Declared in the `components` layer, after HeroUI's own import, so it wins on
  * the specificity tie while a per-instance `rounded-*` utility still overrides.
@@ -242,7 +245,7 @@
 @layer components {
   .menu-item,
   .list-box-item {
-    border-radius: 20px;
+    border-radius: 28px;
   }
 }
 
