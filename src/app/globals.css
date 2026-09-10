@@ -32,27 +32,21 @@
 
   --radius-4xl: 2rem;
 
-  --shadow-card:
-    0 1px 2px --alpha(var(--color-foreground) / 4%),
-    0 12px 32px -12px --alpha(var(--color-foreground) / 12%);
-  --shadow-lift: 0 24px 60px -24px --alpha(var(--color-foreground) / 28%);
+  /*
+   * The playful block palette. These are deliberately theme-independent: a
+   * yellow block needs ink text and a purple block needs cream text in both
+   * light and dark mode, so the on-colour pair must not flip with the theme.
+   */
+  --color-brand-ink: #1f1a17;
+  --color-brand-cream: #fdfaf5;
+  --color-brand-coral: #ff5a52;
+  --color-brand-pink: #fa6db4;
+  --color-brand-purple: #8b54f7;
+  --color-brand-yellow: #ffd84d;
 
+  --shadow-block: 0 14px 34px -18px --alpha(var(--color-brand-ink) / 45%);
 
-  --animate-spotlight: spotlight 2s ease 0.3s 1 forwards;
   --animate-marquee-x: marquee-x var(--marquee-duration, 40s) linear infinite;
-  --animate-meteor: meteor var(--meteor-duration, 5s) linear infinite;
-  --animate-float: float 6s ease-in-out infinite;
-
-  @keyframes spotlight {
-    0% {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, -40%) scale(1);
-    }
-  }
 
   @keyframes marquee-x {
     from {
@@ -62,44 +56,17 @@
       transform: translateX(calc(-50% - 0.5rem));
     }
   }
-
-  @keyframes meteor {
-    0% {
-      transform: rotate(215deg) translateX(0);
-      opacity: 1;
-    }
-    70% {
-      opacity: 1;
-    }
-    100% {
-      transform: rotate(215deg) translateX(-500px);
-      opacity: 0;
-    }
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
 }
 
 /*
  * OTC-specific colours HeroUI's semantic scale does not cover: the dark "panel"
- * band from the design reference and the yellow/red of the Omicron logo.
- * `@theme inline` keeps the var() reference, so the `.dark` overrides below
- * still apply. (`accent-soft` is not redefined here — HeroUI already derives it
- * from `--accent` per theme.)
+ * band used by the footer and the marquee ribbon. `@theme inline` keeps the
+ * var() reference, so the `.dark` overrides below still apply.
  */
 @theme inline {
   --color-panel: var(--panel);
   --color-panel-muted: var(--panel-muted);
   --color-panel-foreground: var(--panel-foreground);
-  --color-brand-yellow: var(--brand-yellow);
   --color-brand-red: var(--brand-red);
 }
 
@@ -107,90 +74,92 @@
  * OTC palette. These override HeroUI's default theme variables, which are
  * declared inside `@layer base` — unlayered declarations win regardless of
  * order, so every token set here must also be restated in `.dark` below.
+ *
+ * `--accent` is the ink used by every primary button and link, matching the
+ * near-black pills of the design; the colour in this design comes from the
+ * block palette above, never from the button.
  */
 :root {
-  --radius: 0.75rem;
+  --radius: 1rem;
 
-  --background: #faf7f2;
-  --foreground: #14110f;
+  --background: #f8f5ef;
+  --foreground: #1f1a17;
 
   --surface: #ffffff;
   --surface-foreground: var(--foreground);
-  --surface-secondary: #f4f0ea;
+  --surface-secondary: #f1ece3;
   --surface-secondary-foreground: var(--foreground);
-  --surface-tertiary: #eae4db;
+  --surface-tertiary: #e7e0d4;
   --surface-tertiary-foreground: var(--foreground);
 
   --overlay: #ffffff;
   --overlay-foreground: var(--foreground);
 
-  --muted: #645c55;
-  --border: #e2dbd2;
-  --separator: #e2dbd2;
+  --muted: #6b625a;
+  --border: #1f1a17;
+  --separator: #ded7ca;
 
-  --default: #f4f0ea;
+  --default: #f1ece3;
   --default-foreground: var(--foreground);
-  --default-hover: #eae4db;
+  --default-hover: #e7e0d4;
 
-  --accent: #ed8564;
-  --accent-foreground: #260f08;
-  --accent-hover: #e57452;
-  --focus: #ed8564;
-  --link: #14110f;
+  --accent: #1f1a17;
+  --accent-foreground: #fdfaf5;
+  --accent-hover: #332a25;
+  --focus: #8b54f7;
+  --link: #1f1a17;
 
   --field-background: #ffffff;
-  --field-border: #e2dbd2;
-  --field-border-width: 1px;
+  --field-border: #1f1a17;
+  --field-border-width: 1.5px;
   --field-foreground: var(--foreground);
   --field-placeholder: #9c948c;
 
-  --panel: #141210;
-  --panel-muted: #262220;
-  --panel-foreground: #f6f2ed;
-  --brand-yellow: #facc15;
-  --brand-red: #cd2b20;
+  --panel: #211a16;
+  --panel-muted: #362c25;
+  --panel-foreground: #f8f5ef;
+  --brand-red: #d93a2e;
 }
 
 .dark,
 [data-theme="dark"] {
-  --background: #0c0b0a;
-  --foreground: #f5f1ec;
+  --background: #100d0b;
+  --foreground: #f8f5ef;
 
-  --surface: #181615;
+  --surface: #1a1613;
   --surface-foreground: var(--foreground);
-  --surface-secondary: #211f1d;
+  --surface-secondary: #211c18;
   --surface-secondary-foreground: var(--foreground);
-  --surface-tertiary: #2a2725;
+  --surface-tertiary: #2a231e;
   --surface-tertiary-foreground: var(--foreground);
 
-  --overlay: #211f1d;
+  --overlay: #211c18;
   --overlay-foreground: var(--foreground);
 
-  --muted: #a59d95;
-  --border: #302c29;
-  --separator: #302c29;
+  --muted: #a89f96;
+  --border: #3a322b;
+  --separator: #3a322b;
 
-  --default: #211f1d;
+  --default: #211c18;
   --default-foreground: var(--foreground);
-  --default-hover: #2a2725;
+  --default-hover: #2a231e;
 
-  --accent: #f19476;
-  --accent-foreground: #180a05;
-  --accent-hover: #f4a288;
-  --focus: #f19476;
-  --link: #f5f1ec;
+  /* Inverted so the primary pill stays a high-contrast solid on a dark page. */
+  --accent: #f8f5ef;
+  --accent-foreground: #17120f;
+  --accent-hover: #ffffff;
+  --focus: #a982ff;
+  --link: #f8f5ef;
 
-  --field-background: #181615;
-  --field-border: #302c29;
+  --field-background: #1a1613;
+  --field-border: #3a322b;
   --field-foreground: var(--foreground);
   --field-placeholder: #7d766f;
 
-  /* The panel band lifts off the near-black page background in dark mode. */
-  --panel: #1c1a18;
-  --panel-muted: #2a2724;
-  --panel-foreground: #f6f2ed;
-  --brand-yellow: #facc15;
-  --brand-red: #e84a3e;
+  --panel: #1a1613;
+  --panel-muted: #2c2520;
+  --panel-foreground: #f8f5ef;
+  --brand-red: #ff6a5e;
 }
 
 @layer base {
@@ -198,7 +167,7 @@
     scroll-behavior: smooth;
     /* Offset anchor scrolling so section headings clear the sticky navbar. */
     scroll-padding-top: 5.5rem;
-    /* Decorative blurs must never create a horizontal scrollbar on phones. */
+    /* Tilted ribbons must never create a horizontal scrollbar on phones. */
     overflow-x: hidden;
   }
 
@@ -213,7 +182,7 @@
   }
 
   ::selection {
-    background-color: --alpha(var(--color-accent) / 30%);
+    background-color: --alpha(var(--color-brand-yellow) / 55%);
   }
 }
 
@@ -236,17 +205,17 @@
   }
 }
 
-/* Faint blueprint grid behind the hero and the closing CTA. */
+/* Faint tiled paper pattern behind the hero and the closing CTA. */
 @utility grid-backdrop {
   background-image:
     linear-gradient(
       to right,
-      --alpha(var(--color-foreground) / 5.5%) 1px,
+      --alpha(var(--color-foreground) / 4.5%) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      --alpha(var(--color-foreground) / 5.5%) 1px,
+      --alpha(var(--color-foreground) / 4.5%) 1px,
       transparent 1px
     );
   background-size: 2.5rem 2.5rem;
@@ -254,6 +223,11 @@
   @media (width >= 40rem) {
     background-size: 3.5rem 3.5rem;
   }
+}
+
+/* The 1.5px ink outline that frames every card and block in this design. */
+@utility ink-frame {
+  border: 1.5px solid var(--color-border);
 }
 
 @media (prefers-reduced-motion: reduce) {

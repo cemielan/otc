@@ -20,14 +20,15 @@ import { InstagramGlyph } from "@/components/icons";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
+import { toneAt, toneBlock } from "@/components/primitives/tones";
 import { packages, siteConfig, subjects } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
-import { whatsappUrl } from "@/lib/utils";
+import { cn, whatsappUrl } from "@/lib/utils";
 
 const { contact } = siteConfig;
 
 const labelClasses =
-  "text-muted text-[0.7rem] font-semibold tracking-[0.12em] uppercase";
+  "text-foreground text-[0.65rem] font-bold tracking-[0.14em] uppercase";
 
 interface FormState {
   name: string;
@@ -98,7 +99,7 @@ export function Contact() {
   ];
 
   return (
-    <Section id="contact">
+    <Section id="contact" tone="surface">
       <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <div className="flex flex-col gap-8">
           <SectionHeading
@@ -110,6 +111,7 @@ export function Contact() {
           <Reveal delay={0.1}>
             <ul className="grid gap-3">
               <ChannelCard
+                index={0}
                 icon={
                   <MessageCircle className="size-[1.1rem]" strokeWidth={2.2} />
                 }
@@ -120,6 +122,7 @@ export function Contact() {
                 external
               />
               <ChannelCard
+                index={1}
                 icon={<InstagramGlyph className="size-[1.1rem]" />}
                 label={t.contact.channels.instagramLabel}
                 value={`@${contact.instagramHandle}`}
@@ -128,6 +131,7 @@ export function Contact() {
                 external
               />
               <ChannelCard
+                index={2}
                 icon={<Phone className="size-[1.1rem]" strokeWidth={2.2} />}
                 label={t.contact.channels.phoneLabel}
                 value={contact.officePhoneDisplay}
@@ -139,7 +143,7 @@ export function Contact() {
         </div>
 
         <Reveal delay={0.15}>
-          <Card className="shadow-card rounded-4xl p-5 sm:p-8">
+          <Card className="ink-frame bg-surface rounded-4xl p-5 sm:p-8">
             {/*
               HeroUI's Form is React Aria's, so validation state, labelling and
               the association between label, field and error message are handled
@@ -214,7 +218,7 @@ export function Contact() {
                 variant="primary"
                 size="lg"
                 fullWidth
-                className="mt-6 min-h-12"
+                className="mt-6 min-h-12 rounded-full font-semibold"
               >
                 <Send className="size-4" strokeWidth={2.2} />
                 {t.contact.form.submit}
@@ -289,6 +293,7 @@ function ChannelCard({
   caption,
   href,
   external,
+  index,
 }: {
   icon: ReactNode;
   label: string;
@@ -296,24 +301,28 @@ function ChannelCard({
   caption: string;
   href: string;
   external?: boolean;
+  index: number;
 }) {
   return (
     <li>
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-        className="group border-border bg-surface hover:border-accent/50 hover:shadow-card flex min-h-16 items-center gap-4 rounded-3xl border p-4 no-underline transition-all duration-200 hover:-translate-y-0.5"
+        className="ink-frame bg-surface flex min-h-16 items-center gap-4 rounded-3xl p-4 no-underline transition-transform duration-200 hover:-translate-y-1"
       >
-        <span className="bg-accent-soft text-accent grid size-11 shrink-0 place-items-center rounded-2xl">
+        <span
+          className={cn(
+            "grid size-11 shrink-0 place-items-center rounded-2xl",
+            toneBlock[toneAt(index)],
+          )}
+        >
           {icon}
         </span>
         <span className="flex flex-col gap-0.5">
-          <span className="text-muted text-[0.7rem] font-semibold tracking-[0.12em] uppercase">
+          <span className="text-muted text-[0.65rem] font-bold tracking-[0.12em] uppercase">
             {label}
           </span>
-          <span className="text-foreground group-hover:text-accent text-sm font-semibold">
-            {value}
-          </span>
+          <span className="text-foreground text-sm font-bold">{value}</span>
           <span className="text-muted text-xs">{caption}</span>
         </span>
       </a>

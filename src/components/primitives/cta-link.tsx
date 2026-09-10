@@ -39,8 +39,8 @@ export function CtaLink({
       href={href}
       className={cn(
         buttonVariants({ variant, size, fullWidth }),
-        // Touch targets stay at least 44px tall on phones.
-        "min-h-11 no-underline",
+        // Every action in this design is a pill; touch targets stay 44px tall.
+        "min-h-11 rounded-full font-semibold no-underline",
         className,
       )}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}

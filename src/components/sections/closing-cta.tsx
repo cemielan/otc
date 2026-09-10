@@ -16,48 +16,53 @@ export function ClosingCta() {
   );
 
   return (
-    <section className="pb-16 sm:pb-24">
-      <div className="shell">
-        <Reveal>
-          <div className="border-border bg-panel relative overflow-hidden rounded-4xl border px-5 py-12 text-center sm:px-12 sm:py-20">
-            <div
-              aria-hidden="true"
-              className="grid-backdrop pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]"
-            />
-            <div
-              aria-hidden="true"
-              className="bg-accent/20 pointer-events-none absolute top-0 left-1/2 size-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl sm:size-[24rem]"
-            />
+    <section className="relative overflow-hidden py-16 sm:py-24">
+      <div
+        aria-hidden="true"
+        className="grid-backdrop pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]"
+      />
 
-            <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-4 sm:gap-5">
-              <h2 className="font-display text-panel-foreground text-2xl leading-tight font-semibold tracking-tight text-balance sm:text-4xl">
-                {t.cta.title}
-              </h2>
-              <p className="text-panel-foreground/70 text-[0.95rem] leading-relaxed text-pretty sm:text-base">
+      <div className="shell relative">
+        <Reveal>
+          {/* Oversized closing headline, with the palette as punctuation. */}
+          <h2 className="font-display text-foreground max-w-5xl text-[2.4rem] leading-[0.98] font-bold tracking-[-0.035em] text-balance sm:text-6xl lg:text-[4.5rem]">
+            {t.cta.title}
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="mt-8 flex flex-col gap-6 sm:mt-12 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+            <div className="flex flex-col gap-5">
+              <span aria-hidden="true" className="flex gap-2">
+                <span className="bg-brand-coral size-3.5 rounded-full" />
+                <span className="bg-brand-pink size-3.5 rounded-full" />
+                <span className="bg-brand-purple size-3.5 rounded-full" />
+                <span className="bg-brand-yellow size-3.5 rounded-full" />
+              </span>
+              <p className="text-muted max-w-xl text-[0.95rem] leading-relaxed text-pretty sm:text-lg">
                 {t.cta.description}
               </p>
+            </div>
 
-              <div className="mt-2 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-                <CtaLink
-                  href={waLink}
-                  external
-                  variant="primary"
-                  size="lg"
-                  className="w-full sm:w-auto"
-                >
-                  <MessageCircle className="size-4" strokeWidth={2.2} />
-                  {t.cta.primary}
-                </CtaLink>
-                <CtaLink
-                  href="#packages"
-                  variant="tertiary"
-                  size="lg"
-                  className="w-full sm:w-auto"
-                >
-                  {t.cta.secondary}
-                  <ArrowRight className="size-4" strokeWidth={2.2} />
-                </CtaLink>
-              </div>
+            <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:shrink-0">
+              <CtaLink
+                href={waLink}
+                external
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                <MessageCircle className="size-4" strokeWidth={2.2} />
+                {t.cta.primary}
+              </CtaLink>
+              <CtaLink
+                href="#packages"
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto"
+              >
+                {t.cta.secondary}
+                <ArrowRight className="size-4" strokeWidth={2.2} />
+              </CtaLink>
             </div>
           </div>
         </Reveal>

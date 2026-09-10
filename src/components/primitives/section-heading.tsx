@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Chip } from "@heroui/react";
 
 import { Reveal } from "@/components/primitives/reveal";
 import { cn } from "@/lib/utils";
@@ -15,6 +14,11 @@ interface SectionHeadingProps {
   children?: ReactNode;
 }
 
+/**
+ * Section opener: the small marked-up eyebrow, then the heavy display heading
+ * that carries this design. The eyebrow is plain text next to the logo tile
+ * rather than a coloured chip — in this theme colour belongs to the blocks.
+ */
 export function SectionHeading({
   eyebrow,
   title,
@@ -29,32 +33,23 @@ export function SectionHeading({
   return (
     <Reveal
       className={cn(
-        "flex flex-col gap-3 sm:gap-4",
+        "flex flex-col gap-4 sm:gap-5",
         align === "center" && "items-center text-center",
         className,
       )}
     >
-      {/*
-        HeroUI's soft accent chip derives its background from `--accent` per
-        theme, so the same chip reads correctly on light, dark and panel bands.
-      */}
-      <Chip
-        color="accent"
-        variant="soft"
-        size="sm"
+      <span
         className={cn(
-          "gap-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase",
-          // On the dark band the default soft-accent foreground is too dark.
-          onPanel && "text-accent",
+          "text-[0.7rem] font-bold tracking-[0.18em] uppercase",
+          onPanel ? "text-panel-foreground/60" : "text-muted",
         )}
       >
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
-        <Chip.Label>{eyebrow}</Chip.Label>
-      </Chip>
+        {eyebrow}
+      </span>
 
       <h2
         className={cn(
-          "font-display max-w-3xl text-[1.75rem] leading-[1.15] font-semibold tracking-tight text-balance sm:text-4xl lg:text-[2.75rem]",
+          "font-display max-w-3xl text-[1.9rem] leading-[1.08] font-bold tracking-[-0.02em] text-balance sm:text-4xl lg:text-[2.9rem]",
           onPanel ? "text-panel-foreground" : "text-foreground",
         )}
       >

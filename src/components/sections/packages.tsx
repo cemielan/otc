@@ -1,9 +1,8 @@
 "use client";
 
-import { Card, Chip, Separator } from "@heroui/react";
+import { Card, Separator } from "@heroui/react";
 import { Check, MessageCircle, Users } from "lucide-react";
 
-import { Meteors } from "@/components/effects/meteors";
 import { CtaLink } from "@/components/primitives/cta-link";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
@@ -25,7 +24,7 @@ export function Packages() {
         className="mx-auto items-center text-center"
       />
 
-      <div className="mx-auto mt-10 grid max-w-3xl items-stretch gap-4 sm:gap-5 lg:mt-12 lg:grid-cols-2">
+      <div className="mx-auto mt-10 grid max-w-3xl items-stretch gap-4 sm:gap-5 lg:mt-14 lg:grid-cols-2">
         {packages.map((plan, index) => (
           <Reveal key={plan.id} delay={index * 0.08} className="h-full">
             <PlanCard plan={plan} />
@@ -55,110 +54,117 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
     `${t.contact.form.template.intro}\n${t.contact.form.template.plan}: ${copy.name}`,
   );
 
-  const mutedText = plan.featured ? "text-panel-foreground/70" : "text-muted";
+  /** The chosen plan is a solid colour block; the other is a plain framed card. */
+  const featured = plan.featured;
 
   return (
     <Card
       render={(props) => <article {...props} />}
       className={cn(
-        "relative flex h-full flex-col overflow-hidden rounded-4xl p-6 transition-all duration-300 sm:p-8",
-        plan.featured
-          ? "border-accent/40 bg-panel text-panel-foreground shadow-lift"
-          : "text-foreground hover:border-accent/50 hover:shadow-card hover:-translate-y-1",
+        "flex h-full flex-col overflow-hidden rounded-4xl p-6 transition-transform duration-300 sm:p-8",
+        featured
+          ? "bg-brand-purple text-brand-cream border-transparent"
+          : "ink-frame bg-surface text-foreground hover:-translate-y-1.5",
       )}
     >
-      {plan.featured ? <Meteors number={12} /> : null}
-
-      <div className="relative flex flex-1 flex-col">
-        <div className="flex items-start justify-between gap-3">
-          <Card.Title
-            className={cn(
-              "font-display text-xl font-semibold tracking-tight",
-              plan.featured ? "text-panel-foreground" : "text-foreground",
-            )}
-          >
-            {copy.name}
-          </Card.Title>
-
-          {plan.featured ? (
-            <Chip color="accent" variant="primary" size="sm" className="shrink-0">
-              <Chip.Label className="text-[0.7rem] font-semibold tracking-[0.1em] uppercase">
-                {t.packages.popular}
-              </Chip.Label>
-            </Chip>
-          ) : null}
-        </div>
-
-        <Card.Description className={cn("mt-2 text-sm leading-relaxed", mutedText)}>
-          {copy.tagline}
-        </Card.Description>
-
-        <Separator
-          className={cn("my-6", plan.featured && "bg-panel-muted")}
-        />
-
-        <div>
-          <p className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-            {t.packages.consultPrice}
-          </p>
-          <p className={cn("mt-1.5 text-sm", mutedText)}>
-            {t.packages.consultNote}
-          </p>
-
-          <Chip
-            variant={plan.featured ? "tertiary" : "secondary"}
-            size="sm"
-            className={cn("mt-5 gap-2", plan.featured && "text-panel-foreground/80")}
-          >
-            <Users className="size-3.5" strokeWidth={2.2} />
-            <Chip.Label>
-              {t.packages.capacityLabel}: {plan.capacity} {t.packages.studentsUnit}
-            </Chip.Label>
-          </Chip>
-        </div>
-
-        <div className="mt-6 flex-1">
-          <p
-            className={cn(
-              "text-[0.7rem] font-semibold tracking-[0.14em] uppercase",
-              plan.featured ? "text-panel-foreground/60" : "text-muted",
-            )}
-          >
-            {t.packages.includesLabel}
-          </p>
-
-          <ul className="mt-3 space-y-2.5">
-            {copy.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-2.5 text-sm">
-                <Check
-                  aria-hidden="true"
-                  className="text-accent mt-0.5 size-4 shrink-0"
-                  strokeWidth={2.6}
-                />
-                <span
-                  className={
-                    plan.featured ? "text-panel-foreground/85" : "text-foreground"
-                  }
-                >
-                  {feature}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <CtaLink
-          href={waLink}
-          external
-          size="lg"
-          fullWidth
-          variant="primary"
-          className="mt-8"
+      <div className="flex items-start justify-between gap-3">
+        <Card.Title
+          className={cn(
+            "font-display text-xl leading-tight font-bold tracking-[-0.01em]",
+            featured ? "text-brand-cream" : "text-foreground",
+          )}
         >
-          <MessageCircle className="size-4" strokeWidth={2.2} />
-          {t.packages.consultCta}
-        </CtaLink>
+          {copy.name}
+        </Card.Title>
+
+        {featured ? (
+          <span className="bg-brand-cream text-brand-ink shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-[0.12em] uppercase">
+            {t.packages.popular}
+          </span>
+        ) : null}
       </div>
+
+      <Card.Description
+        className={cn(
+          "mt-2 text-sm leading-relaxed",
+          featured ? "text-brand-cream/85" : "text-muted",
+        )}
+      >
+        {copy.tagline}
+      </Card.Description>
+
+      <Separator
+        className={cn("my-6", featured ? "bg-brand-cream/25" : "bg-border/25")}
+      />
+
+      <div>
+        <p className="font-display text-2xl leading-tight font-bold tracking-[-0.01em] sm:text-3xl">
+          {t.packages.consultPrice}
+        </p>
+        <p
+          className={cn(
+            "mt-2 text-sm leading-relaxed",
+            featured ? "text-brand-cream/85" : "text-muted",
+          )}
+        >
+          {t.packages.consultNote}
+        </p>
+
+        <span
+          className={cn(
+            "mt-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold",
+            featured
+              ? "bg-brand-cream/15 text-brand-cream"
+              : "bg-brand-yellow text-brand-ink",
+          )}
+        >
+          <Users className="size-3.5" strokeWidth={2.4} aria-hidden="true" />
+          {t.packages.capacityLabel}: {plan.capacity} {t.packages.studentsUnit}
+        </span>
+      </div>
+
+      <div className="mt-6 flex-1">
+        <p
+          className={cn(
+            "text-[0.65rem] font-bold tracking-[0.16em] uppercase",
+            featured ? "text-brand-cream/70" : "text-muted",
+          )}
+        >
+          {t.packages.includesLabel}
+        </p>
+
+        <ul className="mt-3 space-y-2.5">
+          {copy.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-2.5 text-sm font-medium">
+              <Check
+                aria-hidden="true"
+                className={cn(
+                  "mt-0.5 size-4 shrink-0",
+                  featured ? "text-brand-yellow" : "text-brand-purple",
+                )}
+                strokeWidth={2.8}
+              />
+              <span className={featured ? "text-brand-cream/90" : "text-foreground"}>
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <CtaLink
+        href={waLink}
+        external
+        size="lg"
+        fullWidth
+        className={cn(
+          "mt-8",
+          featured && "bg-brand-cream text-brand-ink hover:bg-white",
+        )}
+      >
+        <MessageCircle className="size-4" strokeWidth={2.2} />
+        {t.packages.consultCta}
+      </CtaLink>
     </Card>
   );
 }

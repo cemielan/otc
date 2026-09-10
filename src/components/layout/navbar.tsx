@@ -33,7 +33,7 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
         scrolled
-          ? "border-border bg-background/85 border-b backdrop-blur-xl"
+          ? "border-border/25 bg-background/90 border-b backdrop-blur-xl"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -57,7 +57,7 @@ export function Navbar() {
             <a
               key={section.id}
               href={section.href}
-              className="hover:bg-surface-secondary hover:text-foreground text-muted rounded-full px-3.5 py-2 text-sm font-medium no-underline transition-colors"
+              className="text-foreground rounded-full px-3.5 py-2 text-sm font-semibold no-underline transition-opacity hover:opacity-60"
             >
               {t.nav[section.id]}
             </a>
@@ -129,7 +129,7 @@ function MobileMenu({
       <Drawer.Content placement="bottom" className="lg:hidden">
         <Drawer.Dialog>
           <Drawer.Header className="flex items-center justify-between">
-            <Drawer.Heading className="font-display text-base font-semibold">
+            <Drawer.Heading className="font-display text-base font-bold">
               {siteConfig.name}
             </Drawer.Heading>
             {/* CloseButton supplies its own dismiss icon. */}
@@ -146,7 +146,7 @@ function MobileMenu({
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="hover:bg-surface-secondary hover:text-foreground text-foreground flex min-h-12 items-center rounded-2xl px-4 text-base font-medium no-underline transition-colors"
+                  className="hover:bg-surface-secondary text-foreground flex min-h-12 items-center rounded-2xl px-4 text-base font-semibold no-underline transition-colors"
                 >
                   {t.nav[section.id]}
                 </motion.a>

@@ -39,7 +39,7 @@ export function WhatsappFab() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 16 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
-          className="bg-accent text-accent-foreground shadow-lift fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid size-14 place-items-center rounded-full no-underline transition-transform hover:scale-105 sm:right-7 sm:bottom-7"
+          className="bg-accent text-accent-foreground shadow-block fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid size-14 place-items-center rounded-full no-underline transition-transform hover:scale-105 sm:right-7 sm:bottom-7"
         >
           <MessageCircle className="size-6" strokeWidth={2.2} />
         </motion.a>

@@ -1,15 +1,16 @@
 "use client";
 
-import { Card, Chip, Separator } from "@heroui/react";
+import { Card } from "@heroui/react";
 import type { LucideIcon } from "lucide-react";
 import { GraduationCap, Landmark, Languages, Target } from "lucide-react";
 
-import { Marquee } from "@/components/effects/marquee";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
+import { toneAt, toneBlock } from "@/components/primitives/tones";
 import { curricula, type CurriculumId } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
+import { cn } from "@/lib/utils";
 
 const curriculumIcons: Record<CurriculumId, LucideIcon> = {
   cambridge: GraduationCap,
@@ -21,38 +22,21 @@ const curriculumIcons: Record<CurriculumId, LucideIcon> = {
 export function Programs() {
   const { t } = useI18n();
 
-  /** Every level across every curriculum, used for the marquee strip. */
-  const marqueeChips = curricula.flatMap(
-    (curriculum) => t.programs.items[curriculum.id].levels,
-  );
-
   return (
-    <Section id="programs" tone="surface">
+    <Section id="programs">
       <SectionHeading
         eyebrow={t.programs.eyebrow}
         title={t.programs.title}
         description={t.programs.description}
+        align="center"
+        className="mx-auto items-center text-center"
       />
 
-      <Reveal className="mt-8 sm:mt-10" delay={0.05}>
-        <Marquee speed="slow">
-          {marqueeChips.map((chip, index) => (
-            <Chip
-              key={`${chip}-${index}`}
-              variant="secondary"
-              size="md"
-              className="whitespace-nowrap"
-            >
-              <Chip.Label>{chip}</Chip.Label>
-            </Chip>
-          ))}
-        </Marquee>
-      </Reveal>
-
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-5">
         {curricula.map((curriculum, index) => {
           const copy = t.programs.items[curriculum.id];
           const Icon = curriculumIcons[curriculum.id];
+          const tone = toneAt(index);
 
           return (
             <Reveal key={curriculum.id} delay={index * 0.08} className="h-full">
@@ -62,40 +46,50 @@ export function Programs() {
                   (including the ref) to be forwarded to the element.
                 */
                 render={(props) => <article {...props} />}
-                className="hover:border-accent/50 hover:shadow-card flex h-full flex-col gap-4 rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1"
+                className="ink-frame bg-surface flex h-full flex-col overflow-hidden rounded-3xl p-0 transition-transform duration-300 hover:-translate-y-1.5"
               >
-                <span className="bg-accent-soft text-accent grid size-11 place-items-center rounded-2xl">
-                  <Icon className="size-5" strokeWidth={2} />
-                </span>
-
-                <div>
-                  <Card.Title className="font-display text-foreground text-lg font-semibold tracking-tight">
-                    {copy.name}
-                  </Card.Title>
-                  <Card.Description className="text-muted mt-1.5 text-sm leading-relaxed">
-                    {copy.tagline}
-                  </Card.Description>
+                {/* The colour block that frames each card, as in the design. */}
+                <div
+                  className={cn(
+                    "flex aspect-[4/3] items-end justify-between p-5",
+                    toneBlock[tone],
+                  )}
+                >
+                  <Icon className="size-10" strokeWidth={2.2} aria-hidden="true" />
+                  <span className="font-display text-3xl leading-none font-bold opacity-70">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
 
-                <div className="mt-auto">
-                  <Separator className="mb-4" />
-                  <p className="text-muted text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
-                    {t.programs.levelsLabel}
-                  </p>
-                  <ul className="mt-2.5 space-y-1.5">
-                    {copy.levels.map((level) => (
-                      <li
-                        key={level}
-                        className="text-foreground flex items-start gap-2 text-sm"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="bg-accent mt-1.5 size-1.5 shrink-0 rounded-full"
-                        />
-                        {level}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="flex flex-1 flex-col gap-4 p-5 sm:p-6">
+                  <div>
+                    <Card.Title className="font-display text-foreground text-lg leading-tight font-bold tracking-[-0.01em]">
+                      {copy.name}
+                    </Card.Title>
+                    <Card.Description className="text-muted mt-2 text-sm leading-relaxed">
+                      {copy.tagline}
+                    </Card.Description>
+                  </div>
+
+                  <div className="mt-auto">
+                    <p className="text-muted text-[0.65rem] font-bold tracking-[0.16em] uppercase">
+                      {t.programs.levelsLabel}
+                    </p>
+                    <ul className="mt-2.5 space-y-1.5">
+                      {copy.levels.map((level) => (
+                        <li
+                          key={level}
+                          className="text-foreground flex items-start gap-2 text-sm font-medium"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="bg-brand-ink mt-1.5 size-1.5 shrink-0 rounded-full dark:bg-brand-yellow"
+                          />
+                          {level}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </Card>
             </Reveal>

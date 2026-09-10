@@ -20,6 +20,8 @@
 export const siteConfig = {
   name: "Omicron Tuition Centre",
   shortName: "OTC",
+  /** Logo wordmark — the name on its own, as the logo sets it. */
+  wordmark: "Omicron",
   /** PLACEHOLDER — production domain, used for canonical URLs, sitemap, robots. */
   url: "https://omicrontuitioncentre.com",
   contact: {
