@@ -52,7 +52,7 @@ export function Steps() {
               <p className="text-brand-ink/75 text-sm leading-relaxed">{step.body}</p>
 
               {/* The inset panel stands in for the photo of the design. */}
-              <div className="bg-brand-cream/70 relative mt-auto flex h-32 items-end justify-between overflow-hidden rounded-2xl p-4">
+              <div className="bg-brand-cream/70 relative mt-auto flex h-32 items-end justify-between overflow-hidden rounded-xl p-4">
                 <span
                   aria-hidden="true"
                   className="font-display text-brand-ink/10 absolute -top-4 -right-1 text-[7rem] leading-none font-black"

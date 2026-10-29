@@ -110,8 +110,6 @@ export const en = {
     },
   },
   about: {
-    established: "Established",
-    mottoLabel: "Our motto",
     eyebrow: "Mission & vision",
     title: "Understanding first. Grades follow.",
     description:

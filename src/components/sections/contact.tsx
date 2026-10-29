@@ -163,7 +163,7 @@ export function Contact() {
                   <Input
                     placeholder={t.contact.form.namePlaceholder}
                     autoComplete="name"
-                    className="min-h-12 rounded-xl"
+                    className="min-h-12"
                   />
                   <FieldError className="text-brand-red text-sm font-medium">
                     {error}
@@ -180,7 +180,7 @@ export function Contact() {
                   </Label>
                   <Input
                     placeholder={t.contact.form.gradePlaceholder}
-                    className="min-h-12 rounded-xl"
+                    className="min-h-12"
                   />
                 </TextField>
 
@@ -211,7 +211,7 @@ export function Contact() {
                   <TextArea
                     rows={4}
                     placeholder={t.contact.form.messagePlaceholder}
-                    className="resize-y rounded-xl"
+                    className="resize-y"
                   />
                 </TextField>
               </div>
@@ -263,8 +263,12 @@ function SelectField({
       onSelectionChange={(key) => onChange(key === null ? "" : String(key))}
     >
       <Label className={labelClasses}>{label}</Label>
-      {/* Select.Trigger renders HeroUI's own chevron indicator by default. */}
-      <Select.Trigger className="min-h-12 justify-between rounded-xl">
+      {/*
+        Select.Trigger renders HeroUI's own chevron indicator by default. Its
+        base class is `inline-flex` without cross-axis centring, so the value
+        would sit at the top of the 48px field; `items-center` fixes that.
+      */}
+      <Select.Trigger className="min-h-12 items-center justify-between">
         <Select.Value>
           {/*
             React Aria reports an empty string (not null) for `selectedText`

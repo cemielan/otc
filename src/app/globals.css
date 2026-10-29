@@ -30,8 +30,6 @@
   /* Page shell width, consumed as `max-w-shell`. */
   --container-shell: 76rem;
 
-  --radius-4xl: 2rem;
-
   /*
    * The soft pastel block palette. Every pastel carries ink text; the orange
    * is reserved for calls to action and small accents.
@@ -66,7 +64,12 @@
 :root {
   color-scheme: light;
 
-  --radius: 1rem;
+  /*
+   * HeroUI derives its whole corner scale from this (xl = 1.5×, 2xl = 2×,
+   * 3xl = 3×, 4xl = 4×). At 0.5rem that is 12 / 16 / 24 / 32px, so a card's
+   * inner corner can always be its outer corner minus its padding.
+   */
+  --radius: 0.5rem;
 
   --background: #ffffff;
   --foreground: #15130f;
@@ -98,6 +101,7 @@
   --field-background: #ffffff;
   --field-border: #dedcd3;
   --field-border-width: 1px;
+  --field-radius: 0.875rem;
   --field-foreground: var(--foreground);
   --field-placeholder: #9a978e;
 }
@@ -161,21 +165,30 @@
 }
 
 /*
- * HeroUI's popovers (dropdown, select, autocomplete) round to
- * `min(32px, var(--radius-3xl))`; with this project's `--radius: 1rem`,
- * `--radius-3xl` is 48px, so the popover corner is a flat 32px. The list/menu
- * inside it pads by 4px (`p-1`) before its items round to 16px — a smaller
- * inset than radius, so a hovered item's corner cuts inside the popover's
- * curve instead of following it. Concentric nesting needs inner radius =
- * outer radius − inset, i.e. 32 − 4 = 28px.
+ * HeroUI's dropdown and select popovers round to a flat 32px, and their
+ * menu/list pads by 6px and 4px respectively, so highlighted items never nest
+ * cleanly inside the curve. Here both popovers get a calmer 20px corner and the
+ * same 6px inset, and items round to 20 − 6 = 14px so their corners run
+ * parallel to the popover's.
  *
  * Declared in the `components` layer, after HeroUI's own import, so it wins on
  * the specificity tie while a per-instance `rounded-*` utility still overrides.
  */
 @layer components {
+  .dropdown__popover,
+  .select__popover {
+    border-radius: 20px;
+  }
+
+  .dropdown__popover [data-slot="dropdown-menu"],
+  .select__popover .list-box {
+    padding: 6px;
+  }
+
   .menu-item,
   .list-box-item {
-    border-radius: 28px;
+    min-height: 2.5rem;
+    border-radius: 14px;
   }
 }
 

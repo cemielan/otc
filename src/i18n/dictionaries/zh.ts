@@ -110,8 +110,6 @@ export const zh: Dictionary = {
     },
   },
   about: {
-    established: "创立于",
-    mottoLabel: "我们的座右铭",
     eyebrow: "使命与愿景",
     title: "先理解，成绩自然随之而来。",
     description:

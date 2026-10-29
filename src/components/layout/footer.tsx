@@ -35,12 +35,6 @@ export function Footer() {
             <p className="text-panel-foreground/70 max-w-xs text-sm leading-relaxed">
               {t.footer.tagline}
             </p>
-            <p className="font-display text-brand-lime text-lg font-semibold italic">
-              “{siteConfig.motto}”
-              <span className="text-panel-foreground/55 ml-2 text-xs font-medium not-italic">
-                · {t.about.established} {siteConfig.foundedYear}
-              </span>
-            </p>
             <p className="text-panel-foreground/70 flex items-start gap-2 text-sm">
               <MapPin
                 aria-hidden="true"

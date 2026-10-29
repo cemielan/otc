@@ -45,7 +45,7 @@ export function Programs() {
                 */
                 render={(props) => <article {...props} />}
                 className={cn(
-                  "flex h-full flex-col gap-6 sm:min-h-72 rounded-3xl border-transparent p-5 transition-transform duration-300 hover:-translate-y-1.5 sm:p-6",
+                  "flex h-full flex-col gap-4 rounded-3xl border-transparent p-5 transition-transform duration-300 hover:-translate-y-1.5 sm:p-6",
                   toneBlock[toneAt(index)],
                 )}
               >
@@ -58,26 +58,25 @@ export function Programs() {
                   </Card.Title>
                 </div>
 
-                <div className="mt-auto flex flex-col gap-4">
-                  <Card.Description className="text-brand-ink/75 text-sm leading-relaxed">
-                    {copy.tagline}
-                  </Card.Description>
+                {/* Description under the title; levels pinned to the bottom, as in Subjects. */}
+                <Card.Description className="text-brand-ink/75 text-sm leading-relaxed">
+                  {copy.tagline}
+                </Card.Description>
 
-                  <div>
-                    <p className="text-brand-ink/60 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
-                      {t.programs.levelsLabel}
-                    </p>
-                    <ul className="mt-2 flex flex-wrap gap-1.5">
-                      {copy.levels.map((level) => (
-                        <li
-                          key={level}
-                          className="bg-brand-cream/80 text-brand-ink rounded-full px-2.5 py-1 text-xs font-medium"
-                        >
-                          {level}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="mt-auto pt-2">
+                  <p className="text-brand-ink/60 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
+                    {t.programs.levelsLabel}
+                  </p>
+                  <ul className="mt-2 flex flex-wrap gap-1.5">
+                    {copy.levels.map((level) => (
+                      <li
+                        key={level}
+                        className="bg-brand-cream/80 text-brand-ink rounded-full px-2.5 py-1 text-xs font-medium"
+                      >
+                        {level}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </Card>
             </Reveal>

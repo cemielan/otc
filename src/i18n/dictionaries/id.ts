@@ -112,8 +112,6 @@ export const id: Dictionary = {
     },
   },
   about: {
-    established: "Berdiri sejak",
-    mottoLabel: "Moto kami",
     eyebrow: "Misi & visi",
     title: "Paham dulu. Nilai mengikuti.",
     description:

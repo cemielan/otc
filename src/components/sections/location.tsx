@@ -36,7 +36,8 @@ export function Location() {
       <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-[1.15fr_0.85fr]">
         <Reveal className="h-full">
           {/* The map sits inside a pastel block, framed like every other tile. */}
-          <div className="bg-brand-lavender h-full rounded-4xl p-2 sm:p-3">
+          {/* 32px outer − 8px inset = the 24px corner of the map inside. */}
+          <div className="bg-brand-lavender h-full rounded-4xl p-2">
             <Card className="relative h-full overflow-hidden rounded-3xl border-transparent p-0">
               {/*
                 Keyless Google Maps embed. `loading="lazy"` keeps the iframe out of

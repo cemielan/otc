@@ -1,13 +1,12 @@
 "use client";
 
-import { Compass, Sparkles } from "lucide-react";
+import { Compass } from "lucide-react";
 
 import { Squiggle } from "@/components/icons";
 import { Reveal } from "@/components/primitives/reveal";
 import { Section } from "@/components/primitives/section";
 import { SectionHeading } from "@/components/primitives/section-heading";
 import { toneAt, toneBlock } from "@/components/primitives/tones";
-import { siteConfig } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 
@@ -23,29 +22,6 @@ export function About() {
             title={t.about.title}
             description={t.about.description}
           />
-
-          {/* Founding year and motto, side by side from small screens up. */}
-          <Reveal delay={0.05}>
-            <div className="soft-frame bg-surface grid overflow-hidden rounded-3xl sm:grid-cols-[auto_1fr]">
-              <div className="bg-brand-ink text-brand-cream flex flex-col justify-center gap-1.5 px-6 py-5 sm:px-7">
-                <span className="text-brand-cream/70 text-xs font-medium">
-                  {t.about.established}
-                </span>
-                <span className="font-display text-4xl leading-none font-semibold tracking-[-0.02em]">
-                  {siteConfig.foundedYear}
-                </span>
-              </div>
-              <div className="flex flex-col justify-center gap-1.5 px-6 py-5 sm:px-7">
-                <span className="text-muted inline-flex items-center gap-2 text-xs font-semibold">
-                  <Sparkles className="text-brand-orange size-4" strokeWidth={2.2} aria-hidden="true" />
-                  {t.about.mottoLabel}
-                </span>
-                <p className="font-display text-foreground text-xl leading-tight font-semibold tracking-[-0.01em] italic sm:text-2xl">
-                  “{siteConfig.motto}”
-                </p>
-              </div>
-            </div>
-          </Reveal>
 
           <Reveal delay={0.08}>
             <div className="bg-brand-lime text-brand-ink relative overflow-hidden rounded-3xl p-6 sm:p-8">
@@ -86,14 +62,14 @@ export function About() {
               <li
                 key={item.title}
                 className={cn(
-                  "flex flex-col gap-2 rounded-3xl p-5 sm:min-h-52 sm:p-6",
+                  "flex flex-col gap-2 rounded-3xl p-5 sm:p-6",
                   toneBlock[toneAt(index)],
                 )}
               >
                 <span className="bg-brand-cream/70 font-display grid size-10 place-items-center rounded-xl text-base font-semibold">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-display mt-auto pt-4 text-base leading-tight font-semibold sm:text-lg">
+                <h3 className="font-display pt-2 text-base leading-tight font-semibold sm:text-lg">
                   {item.title}
                 </h3>
                 <p className="text-brand-ink/75 text-sm leading-relaxed">{item.body}</p>
