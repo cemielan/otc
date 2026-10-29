@@ -38,7 +38,6 @@ export const id: Dictionary = {
       { value: "4", label: "Mata pelajaran inti" },
       { value: "3", label: "Kurikulum yang dilayani" },
       { value: "2", label: "Format kelas" },
-      { value: "1-5", label: "Siswa per kelas" },
     ],
     floatingCard: {
       title: "Checkpoint sampai A Level",

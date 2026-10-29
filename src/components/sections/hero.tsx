@@ -33,14 +33,14 @@ export function Hero() {
     siteConfig.contact.whatsappE164,
     t.contact.form.template.intro,
   );
-  const [subjectStat, curriculaStat, formatsStat, sizeStat] = t.hero.stats;
+  const [subjectStat, curriculaStat, formatsStat] = t.hero.stats;
 
   return (
     <section
       id="top"
-      className="band-lines relative overflow-hidden rounded-b-[2rem] pt-6 pb-12 sm:rounded-b-[2.5rem] sm:pt-10 sm:pb-16 lg:pb-20"
+      className="band-lines relative overflow-hidden rounded-b-[2rem] pt-4 pb-10 sm:rounded-b-[2.5rem] sm:pt-6 sm:pb-12 lg:pb-14"
     >
-      <div className="shell flex flex-col items-center gap-5 text-center sm:gap-6">
+      <div className="shell flex flex-col items-center gap-4 text-center">
         <motion.span
           {...fadeUp(0)}
           className="soft-frame bg-surface inline-flex items-center gap-2.5 rounded-full py-1.5 pr-4 pl-2"
@@ -55,7 +55,7 @@ export function Hero() {
           </span>
         </motion.span>
 
-        <h1 className="font-display max-w-4xl text-[2.1rem] leading-[1.08] font-semibold tracking-[-0.03em] text-balance sm:text-5xl lg:text-[3.6rem]">
+        <h1 className="font-display max-w-4xl text-[2rem] leading-[1.08] font-semibold tracking-[-0.03em] text-balance sm:text-[2.75rem] lg:text-[3.25rem]">
           <TextReveal
             segments={[
               { text: t.hero.titleLead },
@@ -84,10 +84,10 @@ export function Hero() {
         visual on its own full-width row; phones stack everything with the
         visual first so the page opens on colour.
       */}
-      <div className="shell mt-10 grid gap-8 sm:mt-14 md:grid-cols-2 md:gap-10 lg:grid-cols-[1fr_1.35fr_1fr] lg:items-center">
+      <div className="shell mt-8 grid gap-6 sm:mt-10 md:grid-cols-2 md:gap-8 lg:grid-cols-[1fr_1.25fr_1fr] lg:items-center">
         <motion.div
           {...fadeUp(0.6)}
-          className="order-2 flex flex-col gap-5 lg:order-1"
+          className="order-2 flex flex-col gap-4 lg:order-1"
         >
           <div>
             <p className="font-display text-foreground text-2xl leading-tight font-semibold tracking-[-0.01em] text-balance">
@@ -126,15 +126,12 @@ export function Hero() {
           {...fadeUp(0.45)}
           className="order-1 md:col-span-2 lg:order-2 lg:col-span-1"
         >
-          <HeroVisual
-            sinceLabel={t.hero.established}
-            sizeLabel={`${sizeStat.value} ${sizeStat.label}`}
-          />
+          <HeroVisual sinceLabel={t.hero.established} />
         </motion.div>
 
         <motion.div
           {...fadeUp(0.7)}
-          className="order-3 flex flex-col gap-5"
+          className="order-3 flex flex-col gap-4"
         >
           <span aria-hidden="true" className="flex items-center gap-1.5">
             <span className="bg-brand-lavender h-6 w-11 rounded-full" />
@@ -188,17 +185,11 @@ export function Hero() {
 
 /**
  * The centre-piece card: the wordmark and motto on lavender, with the orange
- * loop ribbon and two label chips laid over it, in place of a photo.
+ * loop ribbon and the founding-year chip laid over it, in place of a photo.
  */
-function HeroVisual({
-  sinceLabel,
-  sizeLabel,
-}: {
-  sinceLabel: string;
-  sizeLabel: string;
-}) {
+function HeroVisual({ sinceLabel }: { sinceLabel: string }) {
   return (
-    <div className="bg-brand-lavender text-brand-ink relative isolate mx-auto flex aspect-[4/3] w-full max-w-xl flex-col items-center justify-center gap-3 overflow-hidden rounded-3xl p-6 sm:aspect-[16/10] lg:aspect-[4/3.4]">
+    <div className="bg-brand-lavender text-brand-ink relative isolate mx-auto flex aspect-[16/10] w-full max-w-lg flex-col items-center justify-center gap-2 overflow-hidden rounded-3xl p-6 sm:aspect-[2/1] lg:aspect-[4/3]">
       <span
         aria-hidden="true"
         className="bg-brand-cream/45 absolute -top-16 -right-14 -z-10 size-56 rounded-full"
@@ -213,15 +204,11 @@ function HeroVisual({
         {sinceLabel}
       </span>
 
-      <LogoMark className="size-12 sm:size-14" />
-      <Wordmark className="text-3xl sm:text-4xl" />
-      <p className="font-display text-center text-xl leading-tight font-semibold tracking-[-0.01em] italic sm:text-2xl">
+      <LogoMark className="size-10 sm:size-12" />
+      <Wordmark className="text-2xl sm:text-3xl" />
+      <p className="font-display text-center text-lg leading-tight font-semibold tracking-[-0.01em] italic sm:text-xl">
         “{siteConfig.motto}”
       </p>
-
-      <span className="bg-surface absolute right-4 bottom-4 rounded-full px-3 py-1.5 text-xs font-semibold shadow-sm sm:right-5 sm:bottom-5">
-        {sizeLabel}
-      </span>
     </div>
   );
 }

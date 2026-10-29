@@ -36,7 +36,6 @@ export const en = {
       { value: "4", label: "Core subjects" },
       { value: "3", label: "Curricula covered" },
       { value: "2", label: "Class formats" },
-      { value: "1-5", label: "Students per class" },
     ],
     floatingCard: {
       title: "Checkpoint to A Level",

@@ -37,7 +37,6 @@ export const zh: Dictionary = {
       { value: "4", label: "核心科目" },
       { value: "3", label: "覆盖课程体系" },
       { value: "2", label: "班型选择" },
-      { value: "1-5", label: "每班人数" },
     ],
     floatingCard: {
       title: "从 Checkpoint 到 A Level",
