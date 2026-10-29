@@ -12,10 +12,10 @@
 @source "../";
 
 /*
- * Dark mode is driven by the `.dark` class that next-themes writes on <html>.
- * This redefinition replaces HeroUI's own `dark` variant, which also falls back
- * to `prefers-color-scheme`; that fallback would apply dark-only utilities on an
- * OS-dark device even when the visitor has explicitly chosen light.
+ * The site is light-only. HeroUI's own `dark` variant falls back to
+ * `prefers-color-scheme`, which would apply its dark-only utilities on an
+ * OS-dark device. Restricting the variant to a `.dark` class that is never set
+ * keeps every visitor on the light theme.
  */
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -28,138 +28,78 @@
     "Microsoft YaHei", sans-serif;
 
   /* Page shell width, consumed as `max-w-shell`. */
-  --container-shell: 80rem;
+  --container-shell: 76rem;
 
   --radius-4xl: 2rem;
 
   /*
-   * The playful block palette. These are deliberately theme-independent: a
-   * yellow block needs ink text and a purple block needs cream text in both
-   * light and dark mode, so the on-colour pair must not flip with the theme.
+   * The soft pastel block palette. Every pastel carries ink text; the orange
+   * is reserved for calls to action and small accents.
    */
-  --color-brand-ink: #1f1a17;
-  --color-brand-cream: #fdfaf5;
-  --color-brand-coral: #ff5a52;
-  --color-brand-pink: #fa6db4;
-  --color-brand-purple: #8b54f7;
-  --color-brand-yellow: #ffd84d;
+  --color-brand-ink: #15130f;
+  --color-brand-cream: #fffef8;
+  --color-brand-band: #f7f8e6;
+  --color-brand-lime: #e3f27a;
+  --color-brand-lavender: #d9d0fb;
+  --color-brand-peach: #fcd6cc;
+  --color-brand-apricot: #f6c590;
+  /* Darkened from the reference orange so white button text passes WCAG AA. */
+  --color-brand-orange: #d93c10;
+  --color-brand-red: #c8321f;
 
-  --shadow-block: 0 14px 34px -18px --alpha(var(--color-brand-ink) / 45%);
+  /* The dark footer band. */
+  --color-panel: #15130f;
+  --color-panel-muted: #2c2924;
+  --color-panel-foreground: #fafaf3;
 
-  --animate-marquee-x: marquee-x var(--marquee-duration, 40s) linear infinite;
-
-  @keyframes marquee-x {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(calc(-50% - 0.5rem));
-    }
-  }
-}
-
-/*
- * OTC-specific colours HeroUI's semantic scale does not cover: the dark "panel"
- * band used by the footer and the marquee ribbon. `@theme inline` keeps the
- * var() reference, so the `.dark` overrides below still apply.
- */
-@theme inline {
-  --color-panel: var(--panel);
-  --color-panel-muted: var(--panel-muted);
-  --color-panel-foreground: var(--panel-foreground);
-  --color-brand-red: var(--brand-red);
+  --shadow-soft: 0 18px 40px -24px --alpha(var(--color-brand-ink) / 28%);
 }
 
 /*
  * OTC palette. These override HeroUI's default theme variables, which are
  * declared inside `@layer base` — unlayered declarations win regardless of
- * order, so every token set here must also be restated in `.dark` below.
+ * order.
  *
- * `--accent` is the ink used by every primary button and link, matching the
- * near-black pills of the design; the colour in this design comes from the
- * block palette above, never from the button.
+ * `--accent` is the orange used by every primary button, matching the design's
+ * call-to-action pills.
  */
 :root {
+  color-scheme: light;
+
   --radius: 1rem;
 
-  --background: #f8f5ef;
-  --foreground: #1f1a17;
+  --background: #ffffff;
+  --foreground: #15130f;
 
   --surface: #ffffff;
   --surface-foreground: var(--foreground);
-  --surface-secondary: #f1ece3;
+  --surface-secondary: #f8f8f3;
   --surface-secondary-foreground: var(--foreground);
-  --surface-tertiary: #e7e0d4;
+  --surface-tertiary: #efeee6;
   --surface-tertiary-foreground: var(--foreground);
 
   --overlay: #ffffff;
   --overlay-foreground: var(--foreground);
 
-  --muted: #6b625a;
-  --border: #1f1a17;
-  --separator: #ded7ca;
+  --muted: #5d5a53;
+  --border: #e6e4dc;
+  --separator: #ebe9e2;
 
-  --default: #f1ece3;
+  --default: #f3f2ec;
   --default-foreground: var(--foreground);
-  --default-hover: #e7e0d4;
+  --default-hover: #e9e8e0;
 
-  --accent: #1f1a17;
-  --accent-foreground: #fdfaf5;
-  --accent-hover: #332a25;
-  --focus: #8b54f7;
-  --link: #1f1a17;
+  --accent: #d93c10;
+  --accent-foreground: #ffffff;
+  --accent-hover: #c2350d;
+  --focus: #7c5cf0;
+  --link: #15130f;
 
   --field-background: #ffffff;
-  --field-border: #1f1a17;
-  --field-border-width: 1.5px;
+  --field-border: #dedcd3;
+  --field-border-width: 1px;
   --field-foreground: var(--foreground);
-  --field-placeholder: #9c948c;
-
-  --panel: #211a16;
-  --panel-muted: #362c25;
-  --panel-foreground: #f8f5ef;
-  --brand-red: #d93a2e;
-}
-
-.dark,
-[data-theme="dark"] {
-  --background: #100d0b;
-  --foreground: #f8f5ef;
-
-  --surface: #1a1613;
-  --surface-foreground: var(--foreground);
-  --surface-secondary: #211c18;
-  --surface-secondary-foreground: var(--foreground);
-  --surface-tertiary: #2a231e;
-  --surface-tertiary-foreground: var(--foreground);
-
-  --overlay: #211c18;
-  --overlay-foreground: var(--foreground);
-
-  --muted: #a89f96;
-  --border: #3a322b;
-  --separator: #3a322b;
-
-  --default: #211c18;
-  --default-foreground: var(--foreground);
-  --default-hover: #2a231e;
-
-  /* Inverted so the primary pill stays a high-contrast solid on a dark page. */
-  --accent: #f8f5ef;
-  --accent-foreground: #17120f;
-  --accent-hover: #ffffff;
-  --focus: #a982ff;
-  --link: #f8f5ef;
-
-  --field-background: #1a1613;
-  --field-border: #3a322b;
-  --field-foreground: var(--foreground);
-  --field-placeholder: #7d766f;
-
-  --panel: #1a1613;
-  --panel-muted: #2c2520;
-  --panel-foreground: #f8f5ef;
-  --brand-red: #ff6a5e;
+  --field-placeholder: #9a978e;
 }
 
 @layer base {
@@ -167,7 +107,7 @@
     scroll-behavior: smooth;
     /* Offset anchor scrolling so section headings clear the sticky navbar. */
     scroll-padding-top: 5.5rem;
-    /* Tilted ribbons must never create a horizontal scrollbar on phones. */
+    /* Decorative shapes must never create a horizontal scrollbar on phones. */
     overflow-x: hidden;
   }
 
@@ -182,7 +122,7 @@
   }
 
   ::selection {
-    background-color: --alpha(var(--color-brand-yellow) / 55%);
+    background-color: var(--color-brand-lime);
   }
 }
 
@@ -205,28 +145,18 @@
   }
 }
 
-/* Faint tiled paper pattern behind the hero and the closing CTA. */
-@utility grid-backdrop {
-  background-image:
-    linear-gradient(
-      to right,
-      --alpha(var(--color-foreground) / 4.5%) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      --alpha(var(--color-foreground) / 4.5%) 1px,
-      transparent 1px
-    );
-  background-size: 2.5rem 2.5rem;
-
-  @media (width >= 40rem) {
-    background-size: 3.5rem 3.5rem;
-  }
+/* The faint vertical streaks on the cream-lime hero band. */
+@utility band-lines {
+  background-color: var(--color-brand-band);
+  background-image: repeating-linear-gradient(
+    to right,
+    --alpha(var(--color-brand-ink) / 3%) 0 1px,
+    transparent 1px 2.75rem
+  );
 }
 
-/* The hairline ink outline that frames every card and block in this design. */
-@utility ink-frame {
+/* The soft hairline that frames white cards in this design. */
+@utility soft-frame {
   border: 1px solid var(--color-border);
 }
 
@@ -249,26 +179,9 @@
   }
 }
 
-/*
- * Light/dark switch. The toggle drives this through the View Transitions API
- * (see theme-toggle.tsx), so the whole page crossfades as one composited
- * snapshot. Transitioning colours on every element instead makes the browser
- * animate hundreds of paints at once, which is what felt sluggish.
- */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 420ms;
-  animation-timing-function: ease;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
   }
 
   *,

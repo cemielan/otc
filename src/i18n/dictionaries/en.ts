@@ -7,9 +7,6 @@ export const en = {
   },
   common: {
     language: "Language",
-    theme: "Theme",
-    lightMode: "Light mode",
-    darkMode: "Dark mode",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     backToTop: "Back to top",
@@ -25,6 +22,7 @@ export const en = {
     cta: "Chat on WhatsApp",
   },
   hero: {
+    established: "Teaching since 2007",
     badge: "Cambridge · National · National+",
     titleLead: "A steady foundation for",
     titleAccent: "Cambridge & National",
@@ -112,6 +110,8 @@ export const en = {
     },
   },
   about: {
+    established: "Established",
+    mottoLabel: "Our motto",
     eyebrow: "Mission & vision",
     title: "Understanding first. Grades follow.",
     description:

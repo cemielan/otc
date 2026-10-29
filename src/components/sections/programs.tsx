@@ -29,14 +29,12 @@ export function Programs() {
         title={t.programs.title}
         description={t.programs.description}
         align="center"
-        className="mx-auto items-center text-center"
       />
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-5">
         {curricula.map((curriculum, index) => {
           const copy = t.programs.items[curriculum.id];
           const Icon = curriculumIcons[curriculum.id];
-          const tone = toneAt(index);
 
           return (
             <Reveal key={curriculum.id} delay={index * 0.08} className="h-full">
@@ -46,45 +44,35 @@ export function Programs() {
                   (including the ref) to be forwarded to the element.
                 */
                 render={(props) => <article {...props} />}
-                className="ink-frame bg-surface flex h-full flex-col overflow-hidden rounded-3xl p-0 transition-transform duration-300 hover:-translate-y-1.5"
+                className={cn(
+                  "flex h-full flex-col gap-6 sm:min-h-72 rounded-3xl border-transparent p-5 transition-transform duration-300 hover:-translate-y-1.5 sm:p-6",
+                  toneBlock[toneAt(index)],
+                )}
               >
-                {/* The colour block that frames each card, as in the design. */}
-                <div
-                  className={cn(
-                    "flex aspect-[4/3] items-end justify-between p-5",
-                    toneBlock[tone],
-                  )}
-                >
-                  <Icon className="size-10" strokeWidth={2.2} aria-hidden="true" />
-                  <span className="font-display text-3xl leading-none font-bold opacity-70">
-                    {String(index + 1).padStart(2, "0")}
+                <div className="flex items-center gap-3">
+                  <span className="bg-brand-cream/70 grid size-10 shrink-0 place-items-center rounded-xl">
+                    <Icon className="size-5" strokeWidth={2.2} aria-hidden="true" />
                   </span>
+                  <Card.Title className="font-display text-brand-ink text-lg leading-tight font-semibold tracking-[-0.01em]">
+                    {copy.name}
+                  </Card.Title>
                 </div>
 
-                <div className="flex flex-1 flex-col gap-3.5 p-5 sm:p-6">
-                  <div>
-                    <Card.Title className="font-display text-foreground text-lg leading-tight font-bold tracking-[-0.01em]">
-                      {copy.name}
-                    </Card.Title>
-                    <Card.Description className="text-muted mt-2 text-sm leading-relaxed">
-                      {copy.tagline}
-                    </Card.Description>
-                  </div>
+                <div className="mt-auto flex flex-col gap-4">
+                  <Card.Description className="text-brand-ink/75 text-sm leading-relaxed">
+                    {copy.tagline}
+                  </Card.Description>
 
                   <div>
-                    <p className="text-muted text-[0.65rem] font-bold tracking-[0.16em] uppercase">
+                    <p className="text-brand-ink/60 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
                       {t.programs.levelsLabel}
                     </p>
-                    <ul className="mt-2.5 space-y-1.5">
+                    <ul className="mt-2 flex flex-wrap gap-1.5">
                       {copy.levels.map((level) => (
                         <li
                           key={level}
-                          className="text-foreground flex items-start gap-2 text-sm font-medium"
+                          className="bg-brand-cream/80 text-brand-ink rounded-full px-2.5 py-1 text-xs font-medium"
                         >
-                          <span
-                            aria-hidden="true"
-                            className="bg-brand-ink mt-1.5 size-1.5 shrink-0 rounded-full dark:bg-brand-yellow"
-                          />
                           {level}
                         </li>
                       ))}

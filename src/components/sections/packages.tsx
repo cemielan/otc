@@ -21,7 +21,6 @@ export function Packages() {
         title={t.packages.title}
         description={t.packages.description}
         align="center"
-        className="mx-auto items-center text-center"
       />
 
       <div className="mx-auto mt-10 grid max-w-3xl items-stretch gap-4 sm:gap-5 lg:mt-14 lg:grid-cols-2">
@@ -54,68 +53,51 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
     `${t.contact.form.template.intro}\n${t.contact.form.template.plan}: ${copy.name}`,
   );
 
-  /** The chosen plan is a solid colour block; the other is a plain framed card. */
+  /** The chosen plan is a lavender block; the other is a plain framed card. */
   const featured = plan.featured;
 
   return (
     <Card
       render={(props) => <article {...props} />}
       className={cn(
-        "flex h-full flex-col overflow-hidden rounded-4xl p-6 transition-transform duration-300 sm:p-8",
-        featured
-          ? "bg-brand-purple text-brand-cream border-transparent"
-          : "ink-frame bg-surface text-foreground hover:-translate-y-1.5",
+        "text-brand-ink flex h-full flex-col overflow-hidden rounded-4xl p-6 transition-transform duration-300 hover:-translate-y-1.5 sm:p-8",
+        featured ? "bg-brand-lavender border-transparent" : "soft-frame bg-surface",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <Card.Title
-          className={cn(
-            "font-display text-xl leading-tight font-bold tracking-[-0.01em]",
-            featured ? "text-brand-cream" : "text-foreground",
-          )}
+          className="font-display text-brand-ink text-xl leading-tight font-semibold tracking-[-0.01em]"
         >
           {copy.name}
         </Card.Title>
 
         {featured ? (
-          <span className="bg-brand-cream text-brand-ink shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-[0.12em] uppercase">
+          <span className="bg-brand-lime text-brand-ink shrink-0 rounded-full px-3 py-1 text-[0.65rem] font-bold tracking-[0.12em] uppercase">
             {t.packages.popular}
           </span>
         ) : null}
       </div>
 
-      <Card.Description
-        className={cn(
-          "mt-2 text-sm leading-relaxed",
-          featured ? "text-brand-cream/85" : "text-muted",
-        )}
-      >
+      <Card.Description className="text-brand-ink/70 mt-2 text-sm leading-relaxed">
         {copy.tagline}
       </Card.Description>
 
       <Separator
-        className={cn("my-6", featured ? "bg-brand-cream/25" : "bg-border/25")}
+        className={cn("my-6", featured ? "bg-brand-ink/10" : "bg-border")}
       />
 
       <div>
-        <p className="font-display text-2xl leading-tight font-bold tracking-[-0.01em] sm:text-3xl">
+        <p className="font-display text-2xl leading-tight font-semibold tracking-[-0.01em] sm:text-3xl">
           {t.packages.consultPrice}
         </p>
-        <p
-          className={cn(
-            "mt-2 text-sm leading-relaxed",
-            featured ? "text-brand-cream/85" : "text-muted",
-          )}
-        >
+        <p className="text-brand-ink/70 mt-2 text-sm leading-relaxed">
           {t.packages.consultNote}
         </p>
 
         <span
           className={cn(
             "mt-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold",
-            featured
-              ? "bg-brand-cream/15 text-brand-cream"
-              : "bg-brand-yellow text-brand-ink",
+            featured ? "bg-brand-cream/80" : "bg-brand-lime",
           )}
         >
           <Users className="size-3.5" strokeWidth={2.4} aria-hidden="true" />
@@ -124,29 +106,20 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
       </div>
 
       <div className="mt-6 flex-1">
-        <p
-          className={cn(
-            "text-[0.65rem] font-bold tracking-[0.16em] uppercase",
-            featured ? "text-brand-cream/70" : "text-muted",
-          )}
-        >
+        <p className="text-brand-ink/60 text-[0.65rem] font-bold tracking-[0.16em] uppercase">
           {t.packages.includesLabel}
         </p>
 
         <ul className="mt-3 space-y-2.5">
           {copy.features.map((feature) => (
             <li key={feature} className="flex items-start gap-2.5 text-sm font-medium">
-              <Check
+              <span
                 aria-hidden="true"
-                className={cn(
-                  "mt-0.5 size-4 shrink-0",
-                  featured ? "text-brand-yellow" : "text-brand-purple",
-                )}
-                strokeWidth={2.8}
-              />
-              <span className={featured ? "text-brand-cream/90" : "text-foreground"}>
-                {feature}
+                className="bg-brand-orange mt-px grid size-[1.125rem] shrink-0 place-items-center rounded-full text-white"
+              >
+                <Check className="size-3" strokeWidth={3.2} />
               </span>
+              {feature}
             </li>
           ))}
         </ul>
@@ -157,10 +130,7 @@ function PlanCard({ plan }: { plan: PackagePlan }) {
         external
         size="lg"
         fullWidth
-        className={cn(
-          "mt-8",
-          featured && "bg-brand-cream text-brand-ink hover:bg-white",
-        )}
+        className="mt-8"
       >
         <MessageCircle className="size-4" strokeWidth={2.2} />
         {t.packages.consultCta}

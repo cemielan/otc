@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, MessageCircle, Sparkle } from "lucide-react";
 
+import { LoopRibbon } from "@/components/icons";
 import { CtaLink } from "@/components/primitives/cta-link";
 import { Reveal } from "@/components/primitives/reveal";
 import { siteConfig } from "@/content/site";
@@ -16,41 +17,41 @@ export function ClosingCta() {
   );
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-24">
-      <div
-        aria-hidden="true"
-        className="grid-backdrop pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]"
-      />
-
-      <div className="shell relative">
+    <section className="py-14 sm:py-20">
+      <div className="shell">
         <Reveal>
-          {/* Oversized closing headline, with the palette as punctuation. */}
-          <h2 className="font-display text-foreground max-w-5xl text-[2.4rem] leading-[0.98] font-bold tracking-[-0.035em] text-balance sm:text-6xl lg:text-[4.5rem]">
-            {t.cta.title}
-          </h2>
-        </Reveal>
+          {/* The lime closing band, with floating badge icons from tablet up. */}
+          <div className="bg-brand-lime text-brand-ink relative isolate overflow-hidden rounded-4xl px-5 py-12 text-center sm:px-10 sm:py-16 lg:py-20">
+            <LoopRibbon className="text-brand-ink/[0.06] absolute -bottom-10 -left-10 -z-10 h-64 w-auto" />
+            <LoopRibbon className="text-brand-ink/[0.06] absolute -top-12 -right-12 -z-10 h-56 w-auto rotate-180" />
 
-        <Reveal delay={0.1}>
-          <div className="mt-8 flex flex-col gap-6 sm:mt-12 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
-            <div className="flex flex-col gap-5">
-              <span aria-hidden="true" className="flex gap-2">
-                <span className="bg-brand-coral size-3.5 rounded-full" />
-                <span className="bg-brand-pink size-3.5 rounded-full" />
-                <span className="bg-brand-purple size-3.5 rounded-full" />
-                <span className="bg-brand-yellow size-3.5 rounded-full" />
-              </span>
-              <p className="text-muted max-w-xl text-[0.95rem] leading-relaxed text-pretty sm:text-lg">
-                {t.cta.description}
-              </p>
-            </div>
+            <span
+              aria-hidden="true"
+              className="border-brand-orange bg-brand-cream text-brand-orange absolute top-1/2 left-8 hidden size-14 -translate-y-1/2 place-items-center rounded-full border-2 md:grid lg:left-14"
+            >
+              <GraduationCap className="size-6" strokeWidth={2} />
+            </span>
+            <span
+              aria-hidden="true"
+              className="bg-brand-lavender absolute top-8 right-10 hidden size-12 place-items-center rounded-full md:grid lg:right-16"
+            >
+              <BookOpen className="size-5" strokeWidth={2} />
+            </span>
+            <Sparkle
+              aria-hidden="true"
+              className="text-brand-ink/40 absolute right-1/4 bottom-8 hidden size-5 md:block"
+              strokeWidth={2}
+            />
 
-            <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:shrink-0">
-              <CtaLink
-                href={waLink}
-                external
-                size="lg"
-                className="w-full sm:w-auto"
-              >
+            <h2 className="font-display mx-auto max-w-2xl text-[1.85rem] leading-[1.1] font-semibold tracking-[-0.02em] text-balance sm:text-4xl lg:text-[2.75rem]">
+              {t.cta.title}
+            </h2>
+            <p className="text-brand-ink/75 mx-auto mt-4 max-w-xl text-[0.95rem] leading-relaxed text-pretty sm:text-base">
+              {t.cta.description}
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <CtaLink href={waLink} external size="lg" className="w-full sm:w-auto">
                 <MessageCircle className="size-4" strokeWidth={2.2} />
                 {t.cta.primary}
               </CtaLink>
@@ -58,7 +59,7 @@ export function ClosingCta() {
                 href="#packages"
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="bg-brand-cream border-brand-ink/15 w-full sm:w-auto"
               >
                 {t.cta.secondary}
                 <ArrowRight className="size-4" strokeWidth={2.2} />

@@ -27,8 +27,7 @@ import { cn, whatsappUrl } from "@/lib/utils";
 
 const { contact } = siteConfig;
 
-const labelClasses =
-  "text-foreground text-[0.65rem] font-bold tracking-[0.14em] uppercase";
+const labelClasses = "text-foreground text-sm font-semibold";
 
 interface FormState {
   name: string;
@@ -143,7 +142,7 @@ export function Contact() {
         </div>
 
         <Reveal delay={0.15}>
-          <Card className="ink-frame bg-surface rounded-4xl p-5 sm:p-8">
+          <Card className="soft-frame bg-surface shadow-soft rounded-4xl p-5 sm:p-8">
             {/*
               HeroUI's Form is React Aria's, so validation state, labelling and
               the association between label, field and error message are handled
@@ -164,6 +163,7 @@ export function Contact() {
                   <Input
                     placeholder={t.contact.form.namePlaceholder}
                     autoComplete="name"
+                    className="min-h-12 rounded-xl"
                   />
                   <FieldError className="text-brand-red text-sm font-medium">
                     {error}
@@ -178,7 +178,10 @@ export function Contact() {
                   <Label className={labelClasses}>
                     {t.contact.form.gradeLabel}
                   </Label>
-                  <Input placeholder={t.contact.form.gradePlaceholder} />
+                  <Input
+                    placeholder={t.contact.form.gradePlaceholder}
+                    className="min-h-12 rounded-xl"
+                  />
                 </TextField>
 
                 <SelectField
@@ -208,7 +211,7 @@ export function Contact() {
                   <TextArea
                     rows={4}
                     placeholder={t.contact.form.messagePlaceholder}
-                    className="resize-y"
+                    className="resize-y rounded-xl"
                   />
                 </TextField>
               </div>
@@ -261,7 +264,7 @@ function SelectField({
     >
       <Label className={labelClasses}>{label}</Label>
       {/* Select.Trigger renders HeroUI's own chevron indicator by default. */}
-      <Select.Trigger className="min-h-12 justify-between">
+      <Select.Trigger className="min-h-12 justify-between rounded-xl">
         <Select.Value>
           {/*
             React Aria reports an empty string (not null) for `selectedText`
@@ -308,7 +311,7 @@ function ChannelCard({
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-        className="ink-frame bg-surface flex min-h-16 items-center gap-4 rounded-3xl p-4 no-underline transition-transform duration-200 hover:-translate-y-1"
+        className="soft-frame bg-surface flex min-h-16 items-center gap-4 rounded-3xl p-4 no-underline transition-transform duration-200 hover:-translate-y-1"
       >
         <span
           className={cn(

@@ -35,10 +35,16 @@ export function Footer() {
             <p className="text-panel-foreground/70 max-w-xs text-sm leading-relaxed">
               {t.footer.tagline}
             </p>
+            <p className="font-display text-brand-lime text-lg font-semibold italic">
+              “{siteConfig.motto}”
+              <span className="text-panel-foreground/55 ml-2 text-xs font-medium not-italic">
+                · {t.about.established} {siteConfig.foundedYear}
+              </span>
+            </p>
             <p className="text-panel-foreground/70 flex items-start gap-2 text-sm">
               <MapPin
                 aria-hidden="true"
-                className="text-brand-yellow mt-0.5 size-4 shrink-0"
+                className="text-brand-lime mt-0.5 size-4 shrink-0"
                 strokeWidth={2.2}
               />
               {location.city}, {location.region}
@@ -54,7 +60,7 @@ export function Footer() {
                 <li key={section.id}>
                   <Link
                     href={section.href}
-                    className="text-panel-foreground/75 hover:text-brand-yellow text-sm"
+                    className="text-panel-foreground/75 hover:text-brand-lime text-sm"
                   >
                     {t.nav[section.id]}
                   </Link>
@@ -72,7 +78,7 @@ export function Footer() {
                 <li key={subject.id}>
                   <Link
                     href="#subjects"
-                    className="text-panel-foreground/75 hover:text-brand-yellow text-sm"
+                    className="text-panel-foreground/75 hover:text-brand-lime text-sm"
                   >
                     {t.subjects.items[subject.id].name}
                   </Link>
@@ -119,7 +125,7 @@ export function Footer() {
 
           <Link
             href="#top"
-            className="border-panel-muted text-panel-foreground/75 hover:border-brand-yellow/60 hover:text-brand-yellow inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-xs font-semibold no-underline hover:no-underline"
+            className="border-panel-muted text-panel-foreground/75 hover:border-brand-lime/60 hover:text-brand-lime inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-xs font-semibold no-underline hover:no-underline"
           >
             <ArrowUp className="size-3.5" strokeWidth={2.4} />
             {t.common.backToTop}
@@ -148,9 +154,9 @@ function FooterContact({
       <Link
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-        className="text-panel-foreground/75 hover:text-brand-yellow inline-flex min-h-8 items-center gap-2.5 text-sm"
+        className="text-panel-foreground/75 hover:text-brand-lime inline-flex min-h-8 items-center gap-2.5 text-sm"
       >
-        <span aria-hidden="true" className="text-brand-yellow">
+        <span aria-hidden="true" className="text-brand-lime">
           {icon}
         </span>
         <span>

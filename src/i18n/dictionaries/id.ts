@@ -9,9 +9,6 @@ export const id: Dictionary = {
   },
   common: {
     language: "Bahasa",
-    theme: "Tema",
-    lightMode: "Mode terang",
-    darkMode: "Mode gelap",
     openMenu: "Buka menu",
     closeMenu: "Tutup menu",
     backToTop: "Kembali ke atas",
@@ -27,6 +24,7 @@ export const id: Dictionary = {
     cta: "Chat WhatsApp",
   },
   hero: {
+    established: "Mengajar sejak 2007",
     badge: "Cambridge · Nasional · National+",
     titleLead: "Fondasi yang kokoh untuk siswa",
     titleAccent: "Cambridge & Nasional",
@@ -114,6 +112,8 @@ export const id: Dictionary = {
     },
   },
   about: {
+    established: "Berdiri sejak",
+    mottoLabel: "Moto kami",
     eyebrow: "Misi & visi",
     title: "Paham dulu. Nilai mengikuti.",
     description:

@@ -2,18 +2,17 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-type SectionTone = "default" | "surface" | "panel";
+type SectionTone = "default" | "surface";
 
 const toneClasses: Record<SectionTone, string> = {
   default: "bg-background text-foreground",
   surface: "bg-surface-secondary text-foreground",
-  panel: "bg-panel text-panel-foreground",
 };
 
 /**
  * Every landing-page block is wrapped in this so vertical rhythm, the shell
- * width and the light/dark tone bands stay consistent. Padding steps up from
- * phones (py-14) through tablets to desktop.
+ * width and the alternating background bands stay consistent. Padding steps up
+ * from phones (py-14) through tablets to desktop.
  */
 export function Section({
   id,
@@ -32,7 +31,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "scroll-mt-20 py-14 sm:py-20 lg:py-28",
+        "scroll-mt-20 py-14 sm:py-20 lg:py-24",
         toneClasses[tone],
         className,
       )}

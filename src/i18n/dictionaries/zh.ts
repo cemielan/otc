@@ -8,9 +8,6 @@ export const zh: Dictionary = {
   },
   common: {
     language: "语言",
-    theme: "主题",
-    lightMode: "浅色模式",
-    darkMode: "深色模式",
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
     backToTop: "返回顶部",
@@ -26,6 +23,7 @@ export const zh: Dictionary = {
     cta: "WhatsApp 咨询",
   },
   hero: {
+    established: "自 2007 年起授课",
     badge: "剑桥 · 国家课程 · National+",
     titleLead: "为",
     titleAccent: "剑桥与国家课程",
@@ -112,6 +110,8 @@ export const zh: Dictionary = {
     },
   },
   about: {
+    established: "创立于",
+    mottoLabel: "我们的座右铭",
     eyebrow: "使命与愿景",
     title: "先理解，成绩自然随之而来。",
     description:

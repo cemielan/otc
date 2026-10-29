@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 
-import { ThemeProvider } from "@/components/layout/theme-provider";
 import { siteConfig } from "@/content/site";
 import { en } from "@/i18n/dictionaries/en";
 import { I18nProvider } from "@/i18n/provider";
@@ -81,10 +80,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8f5ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#100d0b" },
-  ],
+  themeColor: "#f7f8e6",
+  colorScheme: "light",
 };
 
 /** Structured data so search engines can read the centre's core details. */
@@ -95,6 +92,8 @@ const structuredData = {
   alternateName: siteConfig.shortName,
   description: en.meta.description,
   url: siteConfig.url,
+  foundingDate: String(siteConfig.foundedYear),
+  slogan: siteConfig.motto,
   telephone: `+${siteConfig.contact.whatsappE164}`,
   sameAs: [siteConfig.contact.instagramUrl],
   address: {
@@ -111,20 +110,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${display.variable} ${sans.variable}`}
-    >
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <body>
         <script
           type="application/ld+json"
           // Static, developer-authored JSON — no user input is interpolated.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <ThemeProvider>
-          <I18nProvider>{children}</I18nProvider>
-        </ThemeProvider>
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

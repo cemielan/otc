@@ -22,6 +22,9 @@ export const siteConfig = {
   shortName: "OTC",
   /** Logo wordmark — the name on its own, as the logo sets it. */
   wordmark: "Omicron",
+  foundedYear: 2007,
+  /** The centre's motto — kept in English in every locale, as the brand sets it. */
+  motto: "Never stop learning",
   /** PLACEHOLDER — production domain, used for canonical URLs, sitemap, robots. */
   url: "https://omicrontuitioncentre.com",
   contact: {

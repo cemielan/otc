@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="9" fill="#1f1a17" />
+  <rect width="32" height="32" rx="9" fill="#d93c10" />
   <!--
     The "O" of the OMICRON wordmark: heavy, oblique, white. Drawn as a skewed
     ring rather than as <text> so it never depends on a font being installed.

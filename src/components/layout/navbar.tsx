@@ -7,7 +7,6 @@ import { Menu, MessageCircle } from "lucide-react";
 
 import { Brand } from "@/components/layout/brand";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { CtaLink } from "@/components/primitives/cta-link";
 import { navSections, siteConfig } from "@/content/site";
 import { useI18n } from "@/i18n/provider";
@@ -31,10 +30,11 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-colors duration-300",
+        "sticky top-0 z-50 border-b transition-colors duration-300",
+        /* Unscrolled, the header shares the hero band's colour seamlessly. */
         scrolled
-          ? "border-border/25 bg-background/90 border-b backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent",
+          ? "border-border bg-background/90 backdrop-blur-xl"
+          : "bg-brand-band border-transparent",
       )}
     >
       <a
@@ -51,13 +51,13 @@ export function Navbar() {
 
         <nav
           aria-label={siteConfig.name}
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden items-center gap-0.5 lg:flex"
         >
           {navSections.map((section) => (
             <a
               key={section.id}
               href={section.href}
-              className="text-foreground rounded-full px-3.5 py-2 text-sm font-semibold no-underline transition-opacity hover:opacity-60"
+              className="text-foreground hover:bg-brand-ink/5 rounded-full px-3.5 py-2 text-sm font-medium no-underline transition-colors"
             >
               {t.nav[section.id]}
             </a>
@@ -66,13 +66,11 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
-          <ThemeToggle />
 
           <CtaLink
             href={waLink}
             external
-            variant="primary"
-            className="hidden sm:inline-flex"
+            className="bg-brand-ink hover:bg-brand-ink/85 hidden text-white sm:inline-flex"
           >
             <MessageCircle className="size-4" strokeWidth={2.2} />
             {t.nav.cta}
@@ -120,7 +118,7 @@ function MobileMenu({
           // justify-center` must be bare utility classes here, not just part
           // of buttonVariants: HeroUI's `.drawer__trigger` (inline-block)
           // would otherwise win the display property on a components-layer tie.
-          "inline-flex size-11 items-center justify-center rounded-full lg:hidden",
+          "bg-surface inline-flex size-11 items-center justify-center rounded-full lg:hidden",
         )}
       >
         <Menu className="size-[1.05rem]" />
@@ -146,7 +144,7 @@ function MobileMenu({
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="hover:bg-surface-secondary text-foreground flex min-h-12 items-center rounded-2xl px-4 text-base font-semibold no-underline transition-colors"
+                  className="hover:bg-brand-band text-foreground flex min-h-12 items-center rounded-2xl px-4 text-base font-semibold no-underline transition-colors"
                 >
                   {t.nav[section.id]}
                 </motion.a>

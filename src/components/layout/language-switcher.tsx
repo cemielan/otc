@@ -34,7 +34,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         aria-label={t.common.language}
         className={cn(
           buttonVariants({ variant: "outline" }),
-          "inline-flex h-11 items-center justify-center gap-1.5 rounded-full px-3 sm:h-10",
+          "bg-surface inline-flex h-11 items-center justify-center gap-1.5 rounded-full px-3 sm:h-10",
           className,
         )}
       >
